@@ -44,7 +44,7 @@ function App() {
                   <Route path='/recruiter/career/create' element={<RecruiterProtectedRoute><RecruiterCareerCreate /></RecruiterProtectedRoute>} />
                   <Route path='/recruiter/career/details' element={<RecruiterProtectedRoute><RecruiterCareerDetails /></RecruiterProtectedRoute>} />
 
-                  <Route path='/applicant/home' element={<ApplicantProtectedRoute><ApplicantHome /></ApplicantProtectedRoute>} />
+                  <Route path='/applicant/home' element={<ApplicantHome />} />
                   
                   <Route path="*" element={<div>404 not found</div>} />
               </Routes>
