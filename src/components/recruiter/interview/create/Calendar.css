@@ -1,0 +1,70 @@
+/* Customize the overall calendar container */
+.react-calendar {
+  width: 220px;
+  height: 220px;
+  font-family: 'Arial', sans-serif;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+/* Style the month and year label */
+.react-calendar__navigation__label {
+  font-size: 12px;
+  font-weight: bold;
+  color: rgb(88, 87, 87);
+}
+
+/* Style the navigation buttons */
+.react-calendar__navigation__prev-button,
+.react-calendar__navigation__next-button {
+  cursor: pointer;
+  padding: 0px 0px;
+  margin: 5px;
+}
+
+/* Customize the day tile */
+.react-calendar__tile {
+  padding: 7px 0px;
+  border-radius: 50px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 10px;
+}
+
+/* Highlight today's date */
+.react-calendar__tile--now {
+  background-color: #f5f8fa;
+  font-weight: bold;
+}
+
+/* Style the hover effect on day tiles */
+.react-calendar__tile:hover {
+  background-color: rgb(232 234 246);
+}
+
+/* Customize the selected day */
+.react-calendar__tile--active {
+  background-color:rgb(232 234 246);
+  color: rgb(63 81 181);
+  font-weight: bold;
+}
+
+
+/* Customize the weekdays */
+.react-calendar__month-view__weekdays {
+  background-color: #f5f8fa;
+  font-weight: bold;
+  font-size: 10px;
+}
+
+/* Customize the individual weekday */
+.react-calendar__month-view__weekdays__weekday {
+  padding: 8px;
+  text-align: center;
+}
+
+/* Customize the day of the week label in the month view */
+.react-calendar__month-view__days__day--weekend {
+  color: #e74c3c;
+}

@@ -1,7 +1,6 @@
 import { IoIosArrowDropdown } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 import { ReactTyped } from 'react-typed';
-import './Mainbody.css'
 import { useState, useEffect } from "react";
 
 const Mainbody = () => {
@@ -29,7 +28,7 @@ const Mainbody = () => {
 
     return (
         <div className="flex-1 p-10 w-full">
-            <div className="max-w-[1300px] p-5 lg:p-10 border-x mx-auto">
+            <div className="max-w-[1300px] p-5 lg:p-10 mx-auto">
 
                 <h2 className={`text-4xl md:text-6xl lg:text-7xl font-bold mb-4 text-[#201A31] text-center leading-[1.5] ${isScrolled ? 'mt-15' : 'mt-9'} `}>Save time &<br /> money on {' '}
                     <ReactTyped
@@ -47,11 +46,12 @@ const Mainbody = () => {
                     <button className={`text-black border font-semibold px-7 py-2 rounded-md shadow-md hover:bg-[#abc7e3]`}>signup</button>
                 </div>
 
-                <div className={`mt-32 bg-white rounded-md transition-all duration-1000`}>
-                    <div className="bg-[#897D79] border-white border-[3px] rounded-lg p-6">
+                <p className="text-gray-600 text-base md:text-base mt-32 italic text-left">apply for the job from your url</p>
+                <div className={`mt-6 bg-white rounded-md transition-all duration-1000 shadow-md`}>
+                    <div className="bg-[#897D79] border-white border-[4px] rounded-lg p-6">
                         <div>
                             <h3 className="text-lg font-semibold text-white">MERN Stack developer (jnr)</h3>
-                            <h3 className="text-lg font-semibold text-[#dcfc44]">Konisagg Developing and consulting Tech</h3>
+                            <h3 className="text-lg font-semibold text-[#dcfc44] cursor-pointer hover:underline">Konisagg Developing and consulting Tech</h3>
                             <div className="flex">
                                 <div className="mt-4 text-white grid grid-cols-3 gap-2 w-[95%]">
                                     <p className="text-sm">Experience: 1 - 3 yrs</p>
@@ -66,12 +66,12 @@ const Mainbody = () => {
                                         <RxCross2
                                             className={`w-8 h-8 cursor-pointer text-white`}
                                             onClick={handleButtonTap}
-                                        />
+                                            />
                                     ) : (
                                         <IoIosArrowDropdown
                                             className={`w-8 h-8 cursor-pointer text-white`}
                                             onClick={handleButtonTap}
-                                        />
+                                            />
                                     )}
                                 </div>
                             </div>
@@ -80,7 +80,7 @@ const Mainbody = () => {
                     {
                         isButtonTapped ? (
                             <div className={`p-6`}>
-                                <div className="flex">
+                                <div>
                                     <div className="mt-4 grid grid-cols-2 gap-2 w-[95%]">
                                         <div>
                                             <h3 className="text-lg font-semibold mb-3">Job Description</h3>
@@ -112,6 +112,9 @@ const Mainbody = () => {
                                             </div>
                                         </div>
                                     </div>
+                                    <div className="cursor-pointer text-gray-800 text-center font-semibold italic hover:underline">
+                                        apply now
+                                    </div>
                                 </div>
                             </div>
                         ) : (
@@ -119,6 +122,8 @@ const Mainbody = () => {
                         )
                     }
                 </div>
+                <p className="text-gray-600 text-base md:text-base mt-10 italic text-center">explore more jobs from 
+                <span className="text-lg font-semibold text-brown-400 cursor-pointer underline"> Konisagg Developing and consulting Tech</span></p>
 
             </div>
         </div>

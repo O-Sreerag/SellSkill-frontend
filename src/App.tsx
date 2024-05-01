@@ -18,8 +18,12 @@ import RecruiterHome from './components/recruiter/home/Content'
 import RecruiterCareerDash from './components/recruiter/career/dash/Content'
 import RecruiterCareerCreate from './components/recruiter/career/create/Content'
 import RecruiterCareerDetails from './components/recruiter/career/details/Content'
+import RecruiterInterviewDash from './components/recruiter/interview/dash/Content'
+import RecruiterInterviewCreate from './components/recruiter/interview/create/Content'
 
-import ApplicantHome from './components/applicant/home/Content'
+
+import ApplicantHome from './components/applicant/home/Content' 
+import ApplicantCareerApply from './components/applicant/career/apply/Content' 
 
 import SignupForm from './components/register/authSignup'
 import LoginForm from './components/register/authLogin'
@@ -43,8 +47,11 @@ function App() {
                   <Route path='/recruiter/career' element={<RecruiterProtectedRoute><RecruiterCareerDash /></RecruiterProtectedRoute>} />
                   <Route path='/recruiter/career/create' element={<RecruiterProtectedRoute><RecruiterCareerCreate /></RecruiterProtectedRoute>} />
                   <Route path='/recruiter/career/details' element={<RecruiterProtectedRoute><RecruiterCareerDetails /></RecruiterProtectedRoute>} />
+                  <Route path='/recruiter/interview' element={<RecruiterInterviewDash />} />
+                  <Route path='/recruiter/interview/create' element={<RecruiterInterviewCreate />} />
 
                   <Route path='/applicant/home' element={<ApplicantHome />} />
+                  <Route path='/applicant/career/apply' element={<ApplicantCareerApply />} />
                   
                   <Route path="*" element={<div>404 not found</div>} />
               </Routes>
