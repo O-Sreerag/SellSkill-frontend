@@ -1,17 +1,23 @@
 import { Form } from "./Form"
+import Navbar2 from "../../Navbar2"
 
 const Mainbody = () => {
+
   return (
-    <div className="flex-1 p-10 bg-[#fff] w-full">
-        <div className="max-w-[1000px] items-center flex flex-col justify-between p-10 border mx-auto"> {/* container 1 */}
+    <div className="flex justify-center w-full bg-white">
+      <div className='max-w-[1100px] lg:min-w-[1100px]'>
+        <div className="items-center flex flex-col justify-between p-5">
+          <Navbar2 />
 
-            <div className="w-full mb-4 px-3">
-                <h2 className="text-2xl sm:text-3xl md:text-4xl barlow-light text-[#151B26] justify-start">Career Management</h2>
-            </div>            
+          <div className="w-full space-y-2 mb-2">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl text-[#2B2B2E] justify-start barlow-regular">Career Management</h2>
+          </div>
 
-            <Form/>
+          <Form />
         </div>
+      </div>
     </div>
+
   )
 }
 

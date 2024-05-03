@@ -1,9 +1,12 @@
 import axios from 'axios';
-import React, { FormEvent, useState } from 'react'; // Import useState for form state
+import { FormEvent, useState } from 'react';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom'
 
 export const Form = () => {
-    const [formData, setFormData] = useState({}); // State for form data
+    const navigate = useNavigate()
+    const [formData, setFormData] = useState({});
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         console.log("handle submit")
@@ -40,6 +43,15 @@ export const Form = () => {
         }
     };
 
+    const { pathname } = useLocation();
+    const handleCancel = () => {
+        const destination = '/recruiter/career';
+    
+        if (pathname !== destination) {
+            navigate(destination);
+        }
+    };
+
     return (
         <form className="w-full" onSubmit={(e) =>handleSubmit(e)}>
             <div className="flex w-full">
@@ -50,7 +62,7 @@ export const Form = () => {
                     <button type="submit" className="bg-green-400 text-white hover:bg-green-500 hover:text-white font-sans py-1 px-8 rounded shadow-md">
                         save
                     </button>
-                    <button className="bg-red-400 text-white hover:bg-red-500 hover:text-white font-sans py-1 px-8 rounded shadow-md">
+                    <button className="bg-red-400 text-white hover:bg-red-500 hover:text-white font-sans py-1 px-8 rounded shadow-md" onClick={handleCancel}>
                         cancel
                     </button>
                 </div>
@@ -58,7 +70,7 @@ export const Form = () => {
 
             <div className='mt-10 grid grid-cols-1 lg:grid-cols-2 gap-6'>
 
-                <div> {/* section 1 */}
+                <div>
                     <h3 className='text-xl text-gray-800'>
                         Job Opening Information
                     </h3>
@@ -66,6 +78,10 @@ export const Form = () => {
                         <div>
                             <label htmlFor="posting_title" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Posting Title</label>
                             <input type="text" id="posting_title" name="posting_title" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Job Title" required />
+                        </div>
+                        <div>
+                            <label htmlFor="location" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Location</label>
+                            <input type="text" id="location" name="location" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Location" required />
                         </div>
                         <div>
                             <label htmlFor="salary" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Salary</label>
@@ -83,7 +99,6 @@ export const Form = () => {
                             <label htmlFor="opening_status" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Opening Status</label>
                             <input type="text" id="opening_status" name="opening_status" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Open/Closed" required />
                         </div>
-                        {/* Add more fields for industry, work_exp, date_opened, target_date, revenue per position, and no of positions */}
                         <div>
                             <label htmlFor="industry" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Industry</label>
                             <input type="text" id="industry" name="industry" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Industry" required />
@@ -116,6 +131,10 @@ export const Form = () => {
                         Descriptive Information
                     </h3>
                     <div className="grid gap-6 mb-6 md:grid-cols-1 mt-4 p-4">
+                        <div>
+                            <label htmlFor="job_description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Job Description</label>
+                            <textarea id="job_description" name="job_description" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 h-24 resize-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Job Description" required />
+                        </div>
                         <div>
                             <label htmlFor="required_skills" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Required Skills</label>
                             <textarea id="required_skills" name="required_skills" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 h-24 resize-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Required Skills" required />

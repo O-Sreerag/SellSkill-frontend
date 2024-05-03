@@ -1,60 +1,35 @@
-import { useState } from "react";
-import { AiOutlineMenu } from "react-icons/ai";
-import { IoClose } from "react-icons/io5";
+import React, { useEffect, useState } from 'react';
 
-const Navbar = () => {
-    const [toggle, setToggle] = useState(false)
-
-  return (
-    <div className='bg-[#fff] border-b-2 px-2 w-full shadow-sm fixed top-0 z-10'>
-        <div className=" text-black pl-4 pr-4 items-center flex justify-between mx-auto">
-            <div className="flex p-2">
-                <img
-                    src="/public/41fe38e8-4d1f-4c1f-97cd-046179a556e1.png"
-                    alt="logo"
-                    width={100}
-                    // height={40}
-                />
-            </div>
-
-            {
-                toggle ? 
-                <IoClose onClick={() => {setToggle(!toggle)}}  className="text-black text-2xl md:hidden block"/>
-                :
-                <AiOutlineMenu onClick={() => {setToggle(!toggle)}} className="text-black text-2xl md:hidden block"/>
-            }
-            <ul className="hidden md:flex text-black gap-10">
-                <li>
-                    home
-                </li>
-                <li>
-                    company
-                </li>
-                <li>
-                    resources
-                </li>
-                <li>
-                    about
-                </li>
-            </ul>
-            <ul className={`duration-500 md:hidden w-full h-screen text-black fixed bg-white top-[95px]
-                           ${toggle ?  'left-[0]' : 'left-[-100%]' }`}>
-                <li className="p-3">
-                    home
-                </li>
-                <li className="p-3">
-                    company
-                </li>
-                <li className="p-3">
-                    resources
-                </li>
-                <li className="p-3">
-                    about
-                </li>
-            </ul>
-        </div>
-    </div>
-  )
+interface NavbarProps {
+    items: { label: string; href: string }[];
 }
 
-export default Navbar
+const Navbar: React.FC<NavbarProps> = ({ items }) => {
+
+    return (
+        <nav className='flex justify-center bg-[#fff] border-b-2 w-full shadow-sm fixed top-0 z-10'>
+            <div className={`px-5 py-5 w-full max-w-[1400px]`}>
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center flex-shrink-0 text-gray-800 mr-6 gap-1">
+                        <img src="/public/logo.png" alt="logo" width={23} />
+                        <span className="font-semibold text-xl tracking-tight">SellSkill</span>
+                    </div>
+                    <div className="flex">
+                        {items.map((item, index) => (
+                            <a key={index} href={item.href} className={`text-gray-600 px-3 py-1 rounded-md text-xs font-semibold hover:bg-gray-200`}>
+                                {item.label}
+                            </a>
+                        ))}
+                    </div>
+                    <div className="flex items-center flex-shrink-0 text-gray-800 gap-3">
+                        <button className='bg-black hover:bg-gray-800 text-white font-semibold px-5 py-1 rounded-md'>login</button>
+                        <button className={`text-black border font-semibold px-4 py-1 rounded-md hover:bg-gray-200 shadow-md`}>signup</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    );
+};
+
+export default Navbar;
+//    <div>

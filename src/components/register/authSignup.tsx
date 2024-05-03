@@ -13,21 +13,26 @@ import axios from 'axios';
 import Navbar from "./Navbar";
 import GoogleLoginButton from "./googleLogin";
 import { AppRootState } from '../../redux/store';
-import { resetForm, setEmail, setPassword, setRole } from "../../redux/slices/userSignupSlice";
+import { resetForm, setEmail, setName, setPassword, setRole } from "../../redux/slices/userSignupSlice";
 
 const AuthSignup = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const {email, password, role} = useSelector((state: AppRootState) => state.userSignup)
+    const {name, email, password, role} = useSelector((state: AppRootState) => state.userSignup)
 
     const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setEmail(event.target.value))
     };
 
+    const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        dispatch(setName(event.target.value))
+    };
+
     const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setPassword(event.target.value))
     };
+
 
     const handleOptionChange = (option: string) => {
         dispatch(setRole(option))
@@ -39,6 +44,7 @@ const AuthSignup = () => {
     // Validation schema using Yup
     const validationSchema = Yup.object().shape({
         email: Yup.string().email('Invalid email format').required('Email is required'),
+        name: Yup.string().min(3, 'Name must be atleast 3 characters').max(10, 'Name cannot exceed 10 characters').required('Name is required'),
         password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
     });
 
@@ -46,11 +52,11 @@ const AuthSignup = () => {
 
         try {
             // Validate form data against the schema
-            await validationSchema.validate({ email, password }, { abortEarly: false });
+            await validationSchema.validate({ name, email, password }, { abortEarly: false });
 
             const isGoogle = false
             // If validation succeeds, submit the form
-            const response = await axios.post(`http://sellskill.online/auth/${role}/signup`, { email, password, isGoogle})
+            const response = await axios.post(`http://sellskill.online/auth/${role}/signup`, { name, email, password, isGoogle})
 
             // Check if the signup was successful
             if (response.status === 200) {
@@ -60,12 +66,13 @@ const AuthSignup = () => {
                 console.log("user has successfully signup")
 
                 const otherResponse = await axios.post('http://sellskill.online/auth/common/sendMail', {
+                    name,
                     email,
                     role
-                }); 
+                });
 
                 if(otherResponse.status === 200) {
-                    console.log("email has sent to backend")
+                    console.log("data has sent to backend")
                     navigate(`/login`);
                 } else {                    
                     console.log("email senting failed")
@@ -118,6 +125,13 @@ const AuthSignup = () => {
                         onChange={handleEmailChange}
                         />
                         {errors.email && <div className="text-red-500">{errors.email}</div>}
+                        <input 
+                        type="text" 
+                        className="border w-full border-gray-300 rounded-l-sm px-3 py-2 h-12 mb-3 focus:outline-none"
+                        placeholder="name"
+                        onChange={handleNameChange}
+                        />
+                        {errors.name && <div className="text-red-500">{errors.name}</div>}
                         <div className="flex w-full">
                             <input
                             type="password"

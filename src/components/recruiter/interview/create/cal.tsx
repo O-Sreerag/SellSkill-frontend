@@ -1,4 +1,3 @@
-import React from 'react'
 import { SlCalender } from "react-icons/sl";
 import Calendar from 'react-calendar';
 

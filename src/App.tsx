@@ -47,11 +47,15 @@ function App() {
                   <Route path='/recruiter/career' element={<RecruiterProtectedRoute><RecruiterCareerDash /></RecruiterProtectedRoute>} />
                   <Route path='/recruiter/career/create' element={<RecruiterProtectedRoute><RecruiterCareerCreate /></RecruiterProtectedRoute>} />
                   <Route path='/recruiter/career/details' element={<RecruiterProtectedRoute><RecruiterCareerDetails /></RecruiterProtectedRoute>} />
+                  <Route path='/recruiter/career/applicants' element={<RecruiterProtectedRoute><RecruiterCareerDetails /></RecruiterProtectedRoute>} />
+
                   <Route path='/recruiter/interview' element={<RecruiterInterviewDash />} />
                   <Route path='/recruiter/interview/create' element={<RecruiterInterviewCreate />} />
 
-                  <Route path='/applicant/home' element={<ApplicantHome />} />
+                  <Route path='/applicant/career' element={<ApplicantHome />} />
                   <Route path='/applicant/career/apply' element={<ApplicantCareerApply />} />
+                  <Route path='/applicant/applications' element={<ApplicantCareerApply />} />
+                  <Route path='/applicant/interviews' element={<ApplicantCareerApply />} />
                   
                   <Route path="*" element={<div>404 not found</div>} />
               </Routes>

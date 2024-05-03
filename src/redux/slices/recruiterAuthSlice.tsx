@@ -3,16 +3,16 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface recruiterState {
     isAuthenticated: boolean;
-    recruiterEmail: string | null;
-    recruiterName: string | null;
-    recruiterImage: string | null;
+    recruiterEmail: string;
+    recruiterName: string;
+    recruiterImage: string;
 }
 
 const initialState: recruiterState = {
     isAuthenticated: false,
-    recruiterEmail: null,
-    recruiterName: null,
-    recruiterImage: null,
+    recruiterEmail: "",
+    recruiterName: "",
+    recruiterImage: "",
 };
 
 const recruiterSlice = createSlice({
@@ -27,9 +27,9 @@ const recruiterSlice = createSlice({
         },
         recruiterLogout: (state) => {
             state.isAuthenticated = false;
-            state.recruiterEmail = null;
-            state.recruiterName = null;
-            state.recruiterImage = null;
+            state.recruiterEmail = "";
+            state.recruiterName = "";
+            state.recruiterImage = "";
         },
     },
 });
