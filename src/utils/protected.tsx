@@ -44,7 +44,7 @@ export const PublicRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     if(decodedToken.role == "recruiter") {
       return <Navigate to='/recruiter/career'/>
     } else {
-      return <Navigate to='/applicant/home'/>
+      return <Navigate to='/applicant/career'/>
     }
     
   } else {

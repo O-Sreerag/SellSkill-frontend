@@ -23,6 +23,7 @@ import RecruiterInterviewCreate from './components/recruiter/interview/create/Co
 
 
 import ApplicantHome from './components/applicant/home/Content' 
+import ApplicantCareerDash from './components/applicant/career/dash/Content' 
 import ApplicantCareerApply from './components/applicant/career/apply/Content' 
 
 import SignupForm from './components/register/authSignup'
@@ -49,11 +50,12 @@ function App() {
                   <Route path='/recruiter/career/details' element={<RecruiterProtectedRoute><RecruiterCareerDetails /></RecruiterProtectedRoute>} />
                   <Route path='/recruiter/career/applicants' element={<RecruiterProtectedRoute><RecruiterCareerDetails /></RecruiterProtectedRoute>} />
 
-                  <Route path='/recruiter/interview' element={<RecruiterInterviewDash />} />
-                  <Route path='/recruiter/interview/create' element={<RecruiterInterviewCreate />} />
+                  <Route path='/recruiter/interview' element={<RecruiterProtectedRoute><RecruiterInterviewDash /></RecruiterProtectedRoute>} />
+                  <Route path='/recruiter/interview/create' element={<RecruiterProtectedRoute><RecruiterInterviewCreate /></RecruiterProtectedRoute>} />
 
-                  <Route path='/applicant/career' element={<ApplicantHome />} />
-                  <Route path='/applicant/career/apply' element={<ApplicantCareerApply />} />
+                  <Route path='/applicant/home' element={<ApplicantHome />} />
+                  <Route path='/applicant/career' element={<ApplicantProtectedRoute><ApplicantCareerDash /></ApplicantProtectedRoute>} />
+                  <Route path='/applicant/career/apply' element={<ApplicantProtectedRoute><ApplicantCareerApply /></ApplicantProtectedRoute>} />
                   <Route path='/applicant/applications' element={<ApplicantCareerApply />} />
                   <Route path='/applicant/interviews' element={<ApplicantCareerApply />} />
                   

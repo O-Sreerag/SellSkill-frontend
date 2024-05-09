@@ -1,6 +1,6 @@
 .container {
     min-height: 100px;
-    max-height: 170px;
+    max-height: 100px;
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 5px;
@@ -52,4 +52,22 @@
   .item-delete {
     cursor: pointer;
   }
+  
+  .custom-time-picker {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 6px;
+    font-size: 12px;
+    width: 100%;
+  }
+
+  .custom-time-picker-clock {
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 6px;
+    font-size: 12px;
+    width: 100%;
+  }
+  
   

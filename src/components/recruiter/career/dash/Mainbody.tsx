@@ -9,9 +9,11 @@ import './Mainbody.css'
 import Card from './card';
 import { AppRootState } from '../../../../redux/store';
 import Navbar2 from '../../Navbar2';
+import { api } from "../../../../services/axios";
 
 interface CardData {
     id: number;
+    _id: string;
     title: string;
     content: string;
 }
@@ -20,15 +22,15 @@ const Mainbody = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        console.log("recruiterEmail : ", recruiterEmail, " recruiterName :", recruiterName)
+        console.log("userEmail : ", userEmail, " userName :", userName)
         const fetchData = async () => {
             try {
-                const recruiter: string | null = localStorage.getItem("token") || null;
-                const response = await axios.get(`http://sellskill.online/career/getall?recruiter=${recruiter}`)
+                const response = await api.get(`/career/getall`)
                 console.log(response.data)
                 const data = response.data.result;
-                setCardsData(data.map((item: { posting_title: any; required_skills: any; }, index: number) => ({
+                setCardsData(data.map((item: { _id: string; posting_title: string; required_skills: any; }, index: number) => ({
                     id: index + 1,
+                    _id: item._id,
                     title: item.posting_title,
                     content: item.required_skills
                 })));
@@ -41,15 +43,6 @@ const Mainbody = () => {
         fetchData();
     }, []);
 
-    const { pathname } = useLocation();
-    const handleCreate = () => {
-        const destination = '/recruiter/career/create';
-    
-        if (pathname !== destination) {
-            navigate(destination);
-        }
-    }
-
     const [cardsData, setCardsData] = useState<CardData[]>([]);
     const [hoveredCard, setHoveredCard] = useState(null);
 
@@ -60,8 +53,17 @@ const Mainbody = () => {
         setHoveredCard(null);
     };
 
-    const { recruiterName = 'name', recruiterEmail = 'email' } = useSelector((state: AppRootState) => state.recruiter)
+    const { userName = 'name', userEmail = 'email' } = useSelector((state: AppRootState) => state.user)
 
+    const { pathname } = useLocation();
+    const handleCreate = () => {
+        const destination = '/recruiter/career/create';
+
+        if (pathname !== destination) {
+            navigate(destination);
+        }
+    }
+    
     return (
         <div className="flex justify-center w-full bg-white">
             <div className='max-w-[1100px] lg:min-w-[1100px] min-h-[500px]'>
@@ -76,10 +78,10 @@ const Mainbody = () => {
                     <div className="flex justify-between w-full mt-16 border-b-2 pb-1">
                         <div className='flex gap-3'>
                             <div className='items-center flex'>
-                                <div className='hover:ring-2 hover:ring-gray-300 rounded-full px-[13px] py-[8px] cursor-pointer text-sm bg-gray-400 text-white'>{recruiterName.charAt(0).toUpperCase()}</div>
+                                <div className='hover:ring-2 hover:ring-gray-300 rounded-full px-[13px] py-[8px] cursor-pointer text-sm bg-gray-400 text-white'>{userName.charAt(0).toUpperCase()}</div>
                             </div>
                             <div>
-                                <p className="text-gray-600">{recruiterName}</p>
+                                <p className="text-gray-600">{userName}</p>
                                 <p className="text-blue-700 italic">https://sellskil.com/sreerag-fldjsfoi/connect</p>
                             </div>
                         </div>
@@ -97,6 +99,7 @@ const Mainbody = () => {
                         <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 custom-scrollbar px-3 w-full"> {/* container 2 */}
                             {cardsData.map((card) => (
                                 <Card
+                                    id={card._id}
                                     key={card.id}
                                     title={card.title}
                                     content={card.content}

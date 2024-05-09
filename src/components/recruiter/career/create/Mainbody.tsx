@@ -17,7 +17,6 @@ const Mainbody = () => {
         </div>
       </div>
     </div>
-
   )
 }
 

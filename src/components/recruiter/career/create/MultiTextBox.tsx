@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { TbPointFilled } from "react-icons/tb";
-import './MultiTextBox.css'
 
 interface MultiTextBoxProps {
+  placeholder: string;
   onDataUpdate: (data: string[]) => void;
+  customClassName: string;
 }
 
-const MultiTextBox: React.FC<MultiTextBoxProps> = ({ onDataUpdate }) => {
+const MultiTextBox: React.FC<MultiTextBoxProps> = ({ placeholder, onDataUpdate, customClassName }) => {
 
   const [inputValue, setInputValue] = useState<string>("");
   const [items, setItems] = useState<string[]>([]);
@@ -34,7 +35,7 @@ const MultiTextBox: React.FC<MultiTextBoxProps> = ({ onDataUpdate }) => {
   }, [items, onDataUpdate]);
 
   return (
-    <div className={`space-y-3 container min-h-[100px] max-h-[170px] rounded-md py-2 px-1 relative`} >
+    <div className={`space-y-3 container min-h-[100px] max-h-[170px] rounded-md py-2 px-1 relative ${customClassName}`} >
       <div className="items space-y-1">
         {items.map((item, index) => (
           <span key={index} className="flex align-middle items-center justify-between px-2 py-1 bg-[#f5f8fa] border-none rounded-md">
@@ -48,7 +49,7 @@ const MultiTextBox: React.FC<MultiTextBoxProps> = ({ onDataUpdate }) => {
       </div>
       <input
         type="text"
-        placeholder="name@gmail.com"
+        placeholder={placeholder}
         style={{
           border: "none",
           outline: "none",

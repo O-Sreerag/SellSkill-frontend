@@ -5,15 +5,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as Yup from 'yup';
+import { jwtDecode } from "jwt-decode";
 
 // import Signup from "./signup";
 import Navbar from "./Navbar";
 import GoogleLoginButton from "./googleLogin";
 import axios from "axios";
 import { AppRootState } from '../../redux/store';
-import { recruiterLogin } from "../../redux/slices/recruiterAuthSlice";
-import { Recruiter } from '../../types/recruiterData';
-import { applicantLogin } from "../../redux/slices/applicantAuthSlice";
+import { userLogin } from "../../redux/slices/userAuthSlice";
 
 const AuthLogin = () => {
     const navigate = useNavigate()
@@ -21,8 +20,6 @@ const AuthLogin = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
-    const {role} = useSelector((state: AppRootState) => state.userSignup)
 
     const resetForm = () => {
         setEmail("")
@@ -64,15 +61,16 @@ const AuthLogin = () => {
                 console.log("token : ", token)
                 localStorage.setItem('token', token);
 
+                const decodedToken: any = jwtDecode(token);
+                console.log(decodedToken);
+
+                const role = decodedToken?.role
+
                 const user = response.data.user
                 console.log("user : ", user)
                 
                 // // setting up user global data to be accessed from everywhere
-                if(role == "recruiter") {
-                    dispatch(recruiterLogin({ isAuthenticated: true, recruiterEmail: user.email, recruiterName: user.name, recruiterImage: user.image}));
-                } else {
-                    dispatch(applicantLogin({ isAuthenticated: true, applicantEmail: user.email, applicantName: user.name, applicantImage: user.image}));
-                }
+                dispatch(userLogin({ isAuthenticated: true, userEmail: user.email, userName: user.name, userImage: user.image, userRole: role}));
                 resetForm()
                 
                 toast.success(`${role} successfully logged in!`);

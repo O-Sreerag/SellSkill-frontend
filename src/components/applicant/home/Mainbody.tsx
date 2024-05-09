@@ -36,19 +36,19 @@ const Mainbody = () => {
                         typeSpeed={90}
                         backSpeed={90}
                         loop
-                        className="text-brown-400 bg-white text-4xl md:text-5xl lg:text-6xl rounded-md p-2"
+                        className="text-pink-500 bg-white text-4xl md:text-5xl lg:text-6xl rounded-md p-2"
                     />
                 </h2>
                 <p className="text-black text-base md:text-xl mt-8 text-center px-[10%] lg:px-[20%]">Savings, visibility, and infrastructure guardrails. One automated platform. Leverage the power of divinity in your web</p>
 
                 <div className="flex items-center justify-center mt-4 flex-shrink-0 text-gray-800 gap-5">
                     <button className='bg-black hover:bg-gray-800 text-white font-semibold px-8 py-2  rounded-md'>login</button>
-                    <button className={`text-black border font-semibold px-7 py-2 rounded-md shadow-md hover:bg-[#abc7e3]`}>signup</button>
+                    <button className={`text-black border font-semibold px-7 py-2 rounded-md shadow-md hover:bg-gray-200`}>signup</button>
                 </div>
 
                 <p className="text-gray-600 text-base md:text-base mt-32 italic text-left">apply for the job from your url</p>
                 <div className={`mt-6 bg-white rounded-md transition-all duration-1000 shadow-md`}>
-                    <div className="bg-[#897D79] border-white border-[4px] rounded-lg p-6">
+                    <div className="bg-blue-500 border-white border-[4px] rounded-lg p-6">
                         <div>
                             <h3 className="text-lg font-semibold text-white">MERN Stack developer (jnr)</h3>
                             <h3 className="text-lg font-semibold text-[#dcfc44] cursor-pointer hover:underline">Konisagg Developing and consulting Tech</h3>
@@ -59,7 +59,7 @@ const Mainbody = () => {
                                     <p className="text-sm">Vacancies: 4 prs</p>
                                     <p className="text-sm">Job type: Full time</p>
                                     <p className="text-sm">Work from home available</p>
-                                    <p className="text-sm">Status: <span className="text-white font-semibold">Open</span></p>
+                                    <p className="text-sm">Status: <span className="font-semibold">Open</span></p>
                                 </div>
                                 <div className="w-[5%] flex items-end justify-end">
                                     {isButtonTapped ? (
@@ -123,7 +123,7 @@ const Mainbody = () => {
                     }
                 </div>
                 <p className="text-gray-600 text-base md:text-base mt-10 italic text-center">explore more jobs from 
-                <span className="text-lg font-semibold text-brown-400 cursor-pointer underline"> Konisagg Developing and consulting Tech</span></p>
+                <span className="text-lg font-semibold text-pink-500 cursor-pointer underline"> Konisagg Developing and consulting Tech</span></p>
 
             </div>
         </div>

@@ -40,16 +40,16 @@
 
 /* Style the hover effect on day tiles */
 .react-calendar__tile:hover {
-  background-color: rgb(232 234 246);
+  background-color: rgb(227 242 253 );
 }
 
 /* Customize the selected day */
 .react-calendar__tile--active {
-  background-color:rgb(232 234 246);
-  color: rgb(63 81 181);
+  background-color:rgb(227 242 253 );
+  color: rgb(33 150 243);
+  border: 1px solid rgb(33 150 243);
   font-weight: bold;
 }
-
 
 /* Customize the weekdays */
 .react-calendar__month-view__weekdays {

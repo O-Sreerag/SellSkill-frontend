@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import { FaUserTie } from 'react-icons/fa'
 
 const Navbar2 = () => {
-    const { userName = 'name', userEmail = 'email' } = useSelector((state: AppRootState) => state.user)
+    const { userName = 'Name', userEmail = 'email' } = useSelector((state: AppRootState) => state.user)
     const [showInfo, setShowInfo] = useState("hidden")
 
     const handleInfoOnClick = () => {

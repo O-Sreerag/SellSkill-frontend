@@ -1,0 +1,20 @@
+.items::-webkit-scrollbar {
+  width: 10px;
+}
+
+.items::-webkit-scrollbar-track {
+  background: #fff;
+}
+
+.items::-webkit-scrollbar-thumb {
+  background: rgb(238 238 238);
+  border-radius: 5px;
+}
+
+.items::-webkit-scrollbar-thumb:hover {
+  background: rgb(216, 213, 213);
+}
+
+.item-delete {
+  cursor: pointer;
+}

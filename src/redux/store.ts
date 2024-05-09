@@ -3,13 +3,13 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import recruiterAuthReducer from './slices/recruiterAuthSlice';
 import userSignupReducer from './slices/userSignupSlice'
+import userAuthReducer from './slices/userAuthSlice';
 
 // Combine all reducers into a root reducer
 const rootReducer = combineReducers({
-    recruiter: recruiterAuthReducer,
-    userSignup: userSignupReducer
+    userSignup: userSignupReducer,
+    user: userAuthReducer,
     // Add other reducers here as needed
   });
 
@@ -17,7 +17,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['recruiter'], // specify which reducer states to persist
+    whitelist: ['user'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -36,8 +36,6 @@ export default store;
 // const store = configureStore({
 //     reducer: {
 //         recruiter: recruiterAuthReducer,
-//         login: recruiterLoginReducer,
-//         signup: recruiterSignupReducer,
 //         // Add other reducers here as needed
 //     },
 // });
