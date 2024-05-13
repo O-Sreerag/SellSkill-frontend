@@ -1,0 +1,16 @@
+.team-container::-webkit-scrollbar {
+    width: 10px;
+}
+
+.team-container::-webkit-scrollbar-track {
+    background: #f5f8fa;
+}
+
+.team-container::-webkit-scrollbar-thumb {
+    background: rgb(238 238 238);
+    border-radius: 5px;
+}
+
+.team-container::-webkit-scrollbar-thumb:hover {
+    background: rgb(216, 213, 213);
+}

@@ -21,13 +21,14 @@ import RecruiterCareerDetails from './components/recruiter/career/details/Conten
 import RecruiterInterviewDash from './components/recruiter/interview/dash/Content'
 import RecruiterInterviewCreate from './components/recruiter/interview/create/Content'
 
-
 import ApplicantHome from './components/applicant/home/Content' 
 import ApplicantCareerDash from './components/applicant/career/dash/Content' 
 import ApplicantCareerApply from './components/applicant/career/apply/Content' 
 
 import SignupForm from './components/register/authSignup'
 import LoginForm from './components/register/authLogin'
+
+import VideoCall from './components/videocall/content'
 
 function App() {
 
@@ -59,6 +60,8 @@ function App() {
                   <Route path='/applicant/applications' element={<ApplicantCareerApply />} />
                   <Route path='/applicant/interviews' element={<ApplicantCareerApply />} />
                   
+                  <Route path="/videocall" element={<VideoCall />} />
+
                   <Route path="*" element={<div>404 not found</div>} />
               </Routes>
           </BrowserRouter>
