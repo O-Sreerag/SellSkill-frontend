@@ -1,4 +1,5 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import { FaPlus } from "react-icons/fa";
 import { ImProfile } from "react-icons/im";
@@ -9,26 +10,39 @@ import { FaUserTie } from "react-icons/fa";
 import { IoLogOut } from "react-icons/io5";
 import { IoNotifications } from "react-icons/io5";
 import { LuMessagesSquare } from "react-icons/lu";
+import { MdDashboard } from "react-icons/md";
+
+import { AppRootState } from '../../redux/store';
+import { handleActiveMenu } from "../../redux/slices/activeSlice";
 
 interface SidebarProps {
   activePage: string;
   setActivePage: (page: string) => void;
 }
 
-function Sidebar({ activePage, setActivePage }: SidebarProps) {
+function Sidebar({ activePage, setActivePage, }: SidebarProps) {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-  const { pathname } = useLocation();
-  const handleCreate = () => {
-      const destination = '/recruiter/career/create';
-  
-      if (pathname !== destination) {
-          navigate(destination);
-      }
+  const { activeMenu } = useSelector((state: AppRootState) => state.active);
+
+  const handleMenuChange = (menu: string | null) => (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault()
+    console.log("handlemenuchange", menu)
+    if (menu == activeMenu) {
+      dispatch(handleActiveMenu({ activeMenu: null }))
+    } else {
+      dispatch(handleActiveMenu({ activeMenu: menu }))
+    }
+  }
+
+  const handleNavigate = (navigateTo: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault()
+    navigate(`/${navigateTo}`)
   }
 
   return (
-    <div className="fixed left-0 flex h-full w-60 flex-col border-r bg-white">
+    <div className="fixed z-10 left-0 flex h-full w-60 flex-col border-r bg-white">
       <div className="flex-grow overflow-y-auto overflow-x-hidden">
         <ul className="flex flex-col space-y-1 py-4">
 
@@ -44,14 +58,15 @@ function Sidebar({ activePage, setActivePage }: SidebarProps) {
           <li>
             <ul className="space-y-1">
               <li>
-                <a href="#" className={`relative flex h-9 flex-row items-center border-l-4  pr-6 ${activePage == 'profile' ? 'border-pink-500 bg-[#f5f8fa] text-gray-800' : "border-transparent text-gray-600"} hover:bg-[#f5f8fa] hover:border-pink-200 hover:shadow-sm hover:text-gray-800 focus:outline-none`}>
+                <a onClick={handleNavigate("home")} href="#" className={`relative flex h-9 flex-row items-center border-l-4 border-transparent text-gray-600 pr-6 hover:bg-[#f5f8fa] hover:border-pink-200 hover:shadow-sm hover:text-gray-800 focus:outline-none`}>
                   <span className="ml-5 inline-flex items-center justify-center">
-                    <FaUserTie />              </span>
-                  <span className="ml-2 truncate text-sm tracking-wide">Profile</span>
+                    <FiHome />
+                  </span>
+                  <span className="ml-2 truncate text-sm tracking-wide">Home</span>
                 </a>
               </li>
               <li>
-                <a href="#" className={`relative flex h-9 flex-row items-center border-l-4 ${activePage == 'notifications' ? 'border-pink-500 bg-[#f5f8fa] text-gray-800' : "border-transparent text-gray-600"} pr-6 hover:bg-[#f5f8fa] hover:border-pink-200 hover:shadow-sm hover:text-gray-800 focus:outline-none`}>
+                <a onClick={handleMenuChange("notifications")} href="#" className={`relative flex h-9 flex-row items-center border-l-4 ${activeMenu == 'notifications' ? 'border-pink-500 bg-[#f5f8fa] text-gray-800' : "border-transparent text-gray-600"} pr-6 hover:bg-[#f5f8fa] hover:border-pink-200 hover:shadow-sm hover:text-gray-800 focus:outline-none`}>
                   <span className="ml-5 inline-flex items-center justify-center">
                     <IoNotifications />
                   </span>
@@ -60,7 +75,7 @@ function Sidebar({ activePage, setActivePage }: SidebarProps) {
                 </a>
               </li>
               <li>
-                <a href="#" className={`relative flex h-9 flex-row items-center border-l-4 ${activePage == 'messages' ? 'border-pink-500 bg-[#f5f8fa] text-gray-800' : "border-transparent text-gray-600"} pr-6 hover:bg-[#f5f8fa] hover:border-pink-200 hover:shadow-sm hover:text-gray-800 focus:outline-none`}>
+                <a onClick={handleMenuChange("messages")} href="#" className={`relative flex h-9 flex-row items-center border-l-4 ${activeMenu == 'messages' ? 'border-pink-500 bg-[#f5f8fa] text-gray-800' : "border-transparent text-gray-600"} pr-6 hover:bg-[#f5f8fa] hover:border-pink-200 hover:shadow-sm hover:text-gray-800 focus:outline-none`}>
                   <span className="ml-5 inline-flex items-center justify-center">
                     <LuMessagesSquare />
                   </span>
@@ -82,15 +97,23 @@ function Sidebar({ activePage, setActivePage }: SidebarProps) {
           <li className="p-6">
             <ul className="flex flex-col space-y-1 py-4 border rounded-xl shadow-sm">
               <li className="px-3">
-                <a href="#" className={` flex gap-2 h-9 flex-row align-middle items-center pr-6 ${activePage == "home" ? 'bg-[#f5f8fa] shadow-sm text-gray-800 ' : 'text-gray-700'} hover:bg-[#f5f8fa] hover:shadow-sm rounded-full hover:text-gray-800 focus:outline-none`}>
+                <a onClick={handleNavigate("applicant/profile")} href="#" className={` flex gap-2 h-9 flex-row align-middle items-center pr-6 ${activePage == "profile" ? 'bg-[#f5f8fa] shadow-sm text-gray-800 ' : 'text-gray-700'} hover:bg-[#f5f8fa] hover:shadow-sm rounded-full hover:text-gray-800 focus:outline-none`}>
                   <span className="ml-4 inline-flex items-center justify-center">
-                    <FiHome />
+                    <FaUserTie />
                   </span>
-                  <span className="truncate text-sm mt-[2px] tracking-wide">Home</span>
+                  <span className="truncate text-sm mt-[2px] tracking-wide">Profile</span>
                 </a>
               </li>
               <li className="px-3">
-                <a href="#" className={` flex gap-2 h-9 flex-row align-middle items-center pr-6 ${activePage == "career" ? 'bg-[#f5f8fa] shadow-sm text-gray-800 ' : 'text-gray-700'} hover:bg-[#f5f8fa] hover:shadow-sm rounded-full hover:text-gray-800 focus:outline-none`}>
+                <a onClick={handleNavigate("applicant/dash")} href="#" className={` flex gap-2 h-9 flex-row align-middle items-center pr-6 ${activePage == "dash" ? 'bg-[#f5f8fa] shadow-sm text-gray-800 ' : 'text-gray-700'} hover:bg-[#f5f8fa] hover:shadow-sm rounded-full hover:text-gray-800 focus:outline-none`}>
+                  <span className="ml-4 inline-flex items-center justify-center">
+                    <MdDashboard />
+                  </span>
+                  <span className="truncate text-sm mt-[2px] tracking-wide">Dash</span>
+                </a>
+              </li>
+              <li className="px-3">
+                <a onClick={handleNavigate("applicant/career")} href="#" className={` flex gap-2 h-9 flex-row align-middle items-center pr-6 ${activePage == "career" ? 'bg-[#f5f8fa] shadow-sm text-gray-800 ' : 'text-gray-700'} hover:bg-[#f5f8fa] hover:shadow-sm rounded-full hover:text-gray-800 focus:outline-none`}>
                   <span className="ml-4 inline-flex items-center justify-center">
                     <ImProfile />
                   </span>
@@ -98,7 +121,7 @@ function Sidebar({ activePage, setActivePage }: SidebarProps) {
                 </a>
               </li>
               <li className="px-3">
-                <a href="#" className={` flex gap-2 h-9 flex-row align-middle items-center pr-6 ${activePage == "schedules" ? 'bg-[#f5f8fa] shadow-sm text-gray-800 ' : 'text-gray-700'} hover:bg-[#f5f8fa] hover:shadow-sm rounded-full hover:text-gray-800 focus:outline-none`}>
+                <a onClick={handleNavigate("applicant/schedules")} href="#" className={` flex gap-2 h-9 flex-row align-middle items-center pr-6 ${activePage == "schedules" ? 'bg-[#f5f8fa] shadow-sm text-gray-800 ' : 'text-gray-700'} hover:bg-[#f5f8fa] hover:shadow-sm rounded-full hover:text-gray-800 focus:outline-none`}>
                   <span className="ml-4 inline-flex items-center justify-center">
                     <SiGooglemeet />
                   </span>
@@ -106,7 +129,7 @@ function Sidebar({ activePage, setActivePage }: SidebarProps) {
                 </a>
               </li>
               <li className="px-3">
-                <a href="#" className={` flex gap-2 h-9 flex-row align-middle items-center pr-6 ${activePage == "applications" ? 'bg-[#f5f8fa] shadow-sm text-gray-800 ' : 'text-gray-700'} hover:bg-[#f5f8fa] hover:shadow-sm rounded-full hover:text-gray-800 focus:outline-none`}>
+                <a onClick={handleNavigate("applicant/applications")} href="#" className={` flex gap-2 h-9 flex-row align-middle items-center pr-6 ${activePage == "applications" ? 'bg-[#f5f8fa] shadow-sm text-gray-800 ' : 'text-gray-700'} hover:bg-[#f5f8fa] hover:shadow-sm rounded-full hover:text-gray-800 focus:outline-none`}>
                   <span className="ml-4 inline-flex items-center justify-center">
                     <PiStudentFill />
                   </span>

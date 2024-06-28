@@ -10,16 +10,24 @@ import Card from './card';
 import { AppRootState } from '../../../../redux/store';
 import Navbar2 from '../../Navbar2';
 import { api } from "../../../../services/axios";
+import { RxCross1 } from "react-icons/rx";
+import { IoTrashOutline } from "react-icons/io5";
+import Alert from "../../../common/alert";
 
 interface CardData {
     id: number;
     _id: string;
     title: string;
     content: string;
+    url: string;
 }
 
 const Mainbody = () => {
     const navigate = useNavigate()
+    const [cardsData, setCardsData] = useState<CardData[]>([]);
+    const [hoveredCard, setHoveredCard] = useState(null);
+    const [selectedCards, setSelectedCards] = useState<string[]>([]);
+    const [showAlert, setShowAlert] = useState(false);
 
     useEffect(() => {
         console.log("userEmail : ", userEmail, " userName :", userName)
@@ -28,11 +36,12 @@ const Mainbody = () => {
                 const response = await api.get(`/career/getall`)
                 console.log(response.data)
                 const data = response.data.result;
-                setCardsData(data.map((item: { _id: string; posting_title: string; required_skills: any; }, index: number) => ({
+                setCardsData(data.map((item: { _id: string; posting_title: string; required_skills: any; url: string }, index: number) => ({
                     id: index + 1,
                     _id: item._id,
                     title: item.posting_title,
-                    content: item.required_skills
+                    content: [item.required_skills[0], item.required_skills[1]],
+                    url: item.url,
                 })));
 
             } catch (error) {
@@ -43,9 +52,6 @@ const Mainbody = () => {
         fetchData();
     }, []);
 
-    const [cardsData, setCardsData] = useState<CardData[]>([]);
-    const [hoveredCard, setHoveredCard] = useState(null);
-
     const handleMouseEnter = (id: any) => {
         setHoveredCard(id);
     };
@@ -53,17 +59,35 @@ const Mainbody = () => {
         setHoveredCard(null);
     };
 
-    const { userName = 'name', userEmail = 'email' } = useSelector((state: AppRootState) => state.user)
+    const handleSelectCard = (id: string) => {
+        console.log("handleSelectCard", id)
+        setSelectedCards(prevSelectedCards =>
+            prevSelectedCards.includes(id)
+                ? prevSelectedCards.filter(cardId => cardId !== id)
+                : [...prevSelectedCards, id]
+        );
+    };
 
-    const { pathname } = useLocation();
+    const { userName = 'Name', userEmail = 'email', userProfile = { companyName: "", industry: "", headquarters: "", ceo: "", founded: "", employees: "", revenue: "" } } = useSelector((state: AppRootState) => state.user);
+
     const handleCreate = () => {
-        const destination = '/recruiter/career/create';
-
-        if (pathname !== destination) {
+        if (Object.values(userProfile).some(value => !value)) {
+            setShowAlert(true);
+        } else {
+            const destination = '/recruiter/career/create';
             navigate(destination);
         }
-    }
-    
+    };
+
+    const handleCloseAlert = () => {
+        setShowAlert(false);
+    };
+
+    const handleConfirmAlert = () => {
+        setShowAlert(false);
+        navigate('/recruiter/profile');
+    };
+
     return (
         <div className="flex justify-center w-full bg-white">
             <div className='max-w-[1100px] lg:min-w-[1100px] min-h-[500px]'>
@@ -93,19 +117,41 @@ const Mainbody = () => {
                         </div>
                     </div>
 
-                    {cardsData.length === 0 ? ( // Check if cardsData is empty
-                        <div className="mt-28 text-red-500">No career have been added</div>
+                    {
+                        selectedCards && selectedCards.length >= 1 &&
+                        <div className="flex w-full pt-2 pl-3 justify-start gap-2 items-center">
+                            <div>
+                                <RxCross1 className="text-lg text-pink-500 cursor-pointer" />
+                            </div>
+                            <p className="text-md text-gray-600 border-r-2 border-gray-400 pr-2">{selectedCards.length} selected</p>
+                            <div className="border border-pink-500 p-1 rounded-md">
+                                <IoTrashOutline className="text-pink-500 text-md cursor-pointer" />
+                            </div>
+                        </div>
+                    }
+
+                    {cardsData.length === 0 ? (
+                        <div className="p-10">
+                            <div className="w-full pt-20">
+                                <img src="/public/404-1.png" alt="404" />
+                                <div className="flex flex-col justify-center items-center">
+                                    <h3 className="text-lg font-semibold text-blue-gray-600">Whoops!!</h3>
+                                    <p className="text-sm text-blue-gray-600">No Careers have been added</p>
+                                </div>
+                            </div>
+                        </div>
                     ) : (
-                        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 custom-scrollbar px-3 w-full"> {/* container 2 */}
+                        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 custom-scrollbar px-3 w-full">
                             {cardsData.map((card) => (
                                 <Card
                                     id={card._id}
                                     key={card.id}
-                                    title={card.title}
-                                    content={card.content}
+                                    cardInfo={card}
                                     isHovered={hoveredCard === card.id}
                                     onMouseEnter={() => handleMouseEnter(card.id)}
                                     onMouseLeave={handleMouseLeave}
+                                    isSelected={selectedCards.includes(card._id)}
+                                    onSelect={() => handleSelectCard(card._id)}
                                 />
                             ))}
                         </div>
@@ -113,16 +159,15 @@ const Mainbody = () => {
 
                 </div>
             </div>
+            {showAlert && (
+                <Alert
+                    page="career"
+                    onClose={handleCloseAlert}
+                    onConfirm={handleConfirmAlert}
+                />
+            )}
         </div>
     )
 }
 
 export default Mainbody
-
-// Example data for dynamic cards
-// const cardsData = [
-//     { id: 6, title: "Card Title 6", content: "Card Card content goes here...Card content goes here..." },
-//     { id: 7, title: "Card Title 7", content: "Card Card content goes here...Card content goes here..." },
-//     { id: 8, title: "Card Title 8", content: "Card Card content goes here...Card content goes here..." },
-//     // Add more card data as needed
-// ];

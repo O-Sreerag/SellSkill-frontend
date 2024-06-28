@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 import * as Yup from 'yup';
 import axios from 'axios';
 
-// import Signup from "./signup";
 import Navbar from "./Navbar";
 import GoogleLoginButton from "./googleLogin";
 import { AppRootState } from '../../redux/store';
@@ -18,6 +17,8 @@ import { resetForm, setEmail, setName, setPassword, setRole } from "../../redux/
 const AuthSignup = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const [conformPassword, setConformPassword] = useState<string>('')
+    const [conformPasswordError, setConformPasswordError] = useState<string | null>(null)
 
     const {name, email, password, role} = useSelector((state: AppRootState) => state.userSignup)
 
@@ -33,10 +34,17 @@ const AuthSignup = () => {
         dispatch(setPassword(event.target.value))
     };
 
+    const handleConformPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setConformPassword(event.target.value)
+    };
 
     const handleOptionChange = (option: string) => {
         dispatch(setRole(option))
     };
+
+    const handleNavigate = () => {
+        navigate('/login')
+    }
 
     // State to hold validation errors
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -49,10 +57,17 @@ const AuthSignup = () => {
     });
 
     const handleSignup = async () => {
-
+        setErrors({});
+        setConformPasswordError(null)
         try {
             // Validate form data against the schema
             await validationSchema.validate({ name, email, password }, { abortEarly: false });
+
+            // conform password
+            if(password !== conformPassword) {
+                setConformPasswordError("passwords do not match")
+                return;
+            }
 
             const isGoogle = false
             // If validation succeeds, submit the form
@@ -73,6 +88,7 @@ const AuthSignup = () => {
 
                 if(otherResponse.status === 200) {
                     console.log("data has sent to backend")
+                    toast.success('Signup Success. verification email send');
                     navigate(`/login`);
                 } else {                    
                     console.log("email senting failed")
@@ -115,7 +131,7 @@ const AuthSignup = () => {
                         <div className="border-b border-gray-400 w-full"></div>
                         <div className="text-gray-500 text-xs px-4">OR</div>
                         <div className="border-b border-gray-400 w-full"></div>
-                    </div> */}                  
+                    </div> */}
                     <div className="mb-1 w-full">
                         <input 
                         type="text" 
@@ -132,19 +148,27 @@ const AuthSignup = () => {
                         onChange={handleNameChange}
                         />
                         {errors.name && <div className="text-red-500">{errors.name}</div>}
+                        <input 
+                        type="password" 
+                        className="border w-full border-gray-300 rounded-l-sm px-3 py-2 h-12 mb-3 focus:outline-none"
+                        placeholder="password"
+                        value={password}
+                        onChange={handlePasswordChange}
+                        />
+                        {errors.password && <div className="text-red-500">{errors.password}</div>}
                         <div className="flex w-full">
                             <input
                             type="password"
                             className="border border-gray-300 rounded-l-sm px-3 py-2 w-3/5 h-12 mb-3 focus:outline-none"
-                            placeholder="password"
-                            value={password}
-                            onChange={handlePasswordChange}
+                            placeholder="conform password"
+                            value={conformPassword}
+                            onChange={handleConformPasswordChange}
                             />
                             <button className="bg-black hover:bg-[#ed4758] text-white font-bold py-2 px-4 rounded-r-sm w-2/5 h-12" onClick={handleSignup}>
                             Signup
                             </button>
                         </div>
-                        {errors.password && <div className="text-red-500">{errors.password}</div>}
+                        {conformPasswordError && <div className="text-red-500">{conformPasswordError}</div>}
                     </div>
                     <div className="flex gap-3 justify-start w-full">
                         <div
@@ -176,7 +200,7 @@ const AuthSignup = () => {
                     </div>
                 </div>
                 <div className="text-sm text-gray-600 mb-4">
-                    Already have an account? <a href="#" className="underline">Log in instead</a>
+                    Already have an account? <a href="" className="underline" onClick={handleNavigate}>Log in instead</a>
                 </div>
             </div>
 

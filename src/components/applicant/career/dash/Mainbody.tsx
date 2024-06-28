@@ -1,141 +1,189 @@
 import { useEffect, useState } from 'react'
 import Navbar2 from '../../Navbar2'
-import { RxCross2 } from 'react-icons/rx'
-import { IoIosArrowDropdown } from 'react-icons/io'
-import axios from 'axios'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { api } from '../../../../services/axios'
 
+import { RxCross1, RxCross2 } from 'react-icons/rx'
+import { IoIosArrowDropdown, IoMdArrowDropdown } from 'react-icons/io'
+import { RiUserStarFill, RiUserUnfollowFill, RiUserReceivedFill } from 'react-icons/ri'
+import { useSelector } from 'react-redux'
+import { AppRootState } from '../../../../redux/store'
+import Card from './card'
+import { MdStars } from 'react-icons/md'
+
+enum DropDownValues {
+    All = "all",
+    Applied = "applied",
+    Starred = "starred"
+}
+
+interface CardData {
+    id?: number;
+    career: CareerData;
+    status: string;
+}
+
+interface CareerData {
+    _id: string;
+    recruiterId?: string;
+
+    posting_title?: string;
+    industry?: string;
+    location?: string;
+    salary_min?: number;
+    salary_max?: number;
+    workExp_min?: number;
+    workExp_max?: number;
+    job_type?: string;
+    opening_status?: string;
+    date_opened?: Date;
+    target_date?: Date;
+    contact_name?: string;
+    no_of_positions?: number;
+
+    job_description?: string[];
+    required_skills?: string[];
+    responsibilities?: string[];
+    benefits?: string[];
+
+    applicants?: string[];
+    url?: string;
+}
+
 const Mainbody = () => {
-    const navigate = useNavigate()
-    const [isButtonTapped, setButtonTapped] = useState(false)
-    const { search } = useLocation();
-    const careerId = new URLSearchParams(search).get('id');
-
-    let tokentrial = localStorage.getItem('token')
-    console.log("tokentrail")
-    console.log(tokentrial)
-
-    const handleButtonTap = () => {
-        setButtonTapped(val => !val)
-    }
+    const [dropDownValue, setDropDownValue] = useState<DropDownValues>(DropDownValues.All);
+    const { userName = 'name', userEmail = 'email' } = useSelector((state: AppRootState) => state.user);
+    const [cardsData, setCardsData] = useState<CardData[]>([]);
+    const [hoveredCard, setHoveredCard] = useState(null);
+    const [selectedCards, setSelectedCards] = useState<string[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await api.get(`/career/get/${careerId}`)
+                console.log("getting all careers")
+                const response = await api.get(`/career/getall`)
                 console.log(response.data)
-                const data = response.data.result;
+
+                if (response.status == 200) {
+                    console.log(response.data.result)
+                    console.log("recruiters details")
+                    const data = response.data.result;
+                    // console.log(response.data.result[0]?.career?._doc)
+                    setCardsData(data.map((item: any, index: number) => ({
+                        id: index + 1,
+                        career: item?.career?._doc,
+                        status: item?.status
+                    })));
+                }
 
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         };
-
         fetchData();
     }, []);
 
-    const { pathname } = useLocation();
-    const handleApplyJob = () => {
-        const destination = `/applicant/career/apply?careerId=${careerId}`;
-
-        if (pathname !== destination) {
-            navigate(destination);
-        }
+    const handleMouseEnter = (id: any) => {
+        setHoveredCard(id);
     };
-    
+    const handleMouseLeave = () => {
+        setHoveredCard(null);
+    };
+
+    const handleSelectCard = (id: string) => {
+        console.log("handleSelectCard", id)
+        setSelectedCards(prevSelectedCards =>
+            prevSelectedCards.includes(id)
+                ? prevSelectedCards.filter(cardId => cardId !== id)
+                : [...prevSelectedCards, id]
+        );
+    };
+
+    const [showStatus, setShowStatus] = useState(false)
+    const handleDropDownChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setDropDownValue(event.target.value as DropDownValues);
+    };
+
     return (
         <div className="flex justify-center w-full bg-white">
             <div className='max-w-[1100px] lg:min-w-[1100px]'>
                 <div className="items-center flex flex-col justify-between p-5">
                     <Navbar2 />
-
-                    <div className="w-full space-y-2 mb-2">
+                    <div className="w-full space-y-2">
                         <h2 className="text-2xl sm:text-3xl md:text-4xl text-[#2B2B2E] justify-start barlow-regular">Career Management</h2>
+                        <p className="text-gray-600">View / Manage careers copied from urls.</p>
                     </div>
-                    <div className='w-full'>
-                        <p className="text-gray-600 text-base md:text-base mt-10 italic text-left">apply for the job from your url</p>
-                        <div className={`mt-6 bg-white rounded-md transition-all duration-1000 shadow-md`}>
-                            <div className="bg-blue-500 border-white border-[4px] rounded-lg p-6">
+
+                    <div className="flex justify-between w-full mt-16 border-b-2 pb-1">
+                        <div className='flex gap-3'>
+                            <div className='items-center flex'>
+                                <div className='hover:ring-2 hover:ring-gray-300 rounded-full px-[13px] py-[8px] cursor-pointer text-sm bg-gray-400 text-white'>{userName.charAt(0).toUpperCase()}</div>
+                            </div>
+                            <div>
+                                <p className="text-gray-600">{userName}</p>
+                                <p className="text-blue-700 italic">{userEmail}</p>
+                            </div>
+                        </div>
+                        <div className="flex w-full justify-end gap-2 items-center p-2">
+                            <div>
+                                <select
+                                    value={dropDownValue}
+                                    onChange={handleDropDownChange}
+                                    className="text-sm p-1 bg-white border border-gray-300 rounded focus:outline-none focus:ring-0 focus:bg-gray-100 hover:bg-gray-100"
+                                >
+                                    <option value={DropDownValues.All}>All</option>
+                                    <option value={DropDownValues.Applied}>Applied</option>
+                                    <option value={DropDownValues.Starred}>Starred</option>
+                                </select>
+                            </div>
+                            <div>
+                                <input type="search" className="rounded-lg border py-1 px-2 text-gray-400 focus:outline-none" placeholder="Search..." />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className={`py-4 space-y-2 w-full`}>
+                        {
+                            selectedCards && selectedCards.length >= 1 &&
+                            <div className="flex w-full pt-2 pl-3 justify-start gap-2 items-center">
                                 <div>
-                                    <h3 className="text-lg font-semibold text-white">MERN Stack developer (jnr)</h3>
-                                    <h3 className="text-lg font-semibold text-[#dcfc44] cursor-pointer hover:underline">Konisagg Developing and consulting Tech</h3>
-                                    <div className="flex">
-                                        <div className="mt-4 text-white grid grid-cols-3 gap-2 w-[95%]">
-                                            <p className="text-sm">Experience: 1 - 3 yrs</p>
-                                            <p className="text-sm">Package: 7 - 8 LPA</p>
-                                            <p className="text-sm">Vacancies: 4 prs</p>
-                                            <p className="text-sm">Job type: Full time</p>
-                                            <p className="text-sm">Work from home available</p>
-                                            <p className="text-sm">Status: <span className="font-semibold">Open</span></p>
-                                        </div>
-                                        <div className="w-[5%] flex items-end justify-end">
-                                            {isButtonTapped ? (
-                                                <RxCross2
-                                                    className={`w-8 h-8 cursor-pointer text-white`}
-                                                    onClick={handleButtonTap}
-                                                />
-                                            ) : (
-                                                <IoIosArrowDropdown
-                                                    className={`w-8 h-8 cursor-pointer text-white`}
-                                                    onClick={handleButtonTap}
-                                                />
-                                            )}
-                                        </div>
+                                    <RxCross1 className="text-lg text-pink-500 cursor-pointer" />
+                                </div>
+                                <p className="text-md text-gray-600 border-r-2 border-gray-400 pr-2">{selectedCards.length} selected</p>
+                                <div className="border border-pink-500 p-1 rounded-md">
+                                    <MdStars className="text-pink-500 text-md cursor-pointer" />
+                                </div>
+                            </div>
+                        }
+
+                        {cardsData.length === 0 ? (
+                            <div className="p-10">
+                                <div className="w-full pt-20">
+                                    <img src="/public/404-1.png" alt="404" />
+                                    <div className="flex flex-col justify-center items-center">
+                                        <h3 className="text-lg font-semibold text-blue-gray-600">Whoops!!</h3>
+                                        <p className="text-sm text-blue-gray-600">No Careers(url) have been copied</p>
                                     </div>
                                 </div>
                             </div>
-                            {
-                                isButtonTapped ? (
-                                    <div className={`p-6`}>
-                                        <div>
-                                            <div className="mt-4 grid grid-cols-2 gap-2 w-[95%]">
-                                                <div>
-                                                    <h3 className="text-lg font-semibold mb-3">Job Description</h3>
-                                                    <ul className="p-5 list-disc text-gray-800 text-sm">
-                                                        <li className="mb-2">We are looking for a passionate MERN Stack Developer to join our team.</li>
-                                                        <li className="mb-2">In this role, you will be responsible for developing and maintaining web applications using the MERN stack (MongoDB, Express.js, React, Node.js).</li>
-                                                        <li className="mb-2">You should have a strong understanding of JavaScript, React.js, and Node.js, and experience with MongoDB or other NoSQL databases.</li>
-                                                        <li className="mb-2">Experience with GraphQL, Redux, or TypeScript is a plus.</li>
-                                                        <li className="mb-2">The ideal candidate should be detail-oriented, have excellent problem-solving skills, and be able to work independently as well as part of a team.</li>
-                                                        <li className="mb-2">Strong communication skills and the ability to collaborate effectively with other developers and stakeholders are essential.</li>
-                                                        <li className="mb-2">This is a full-time position based in New York City. Remote work options are available.</li>
-                                                        <li className="mb-2">If you are passionate about web development and want to work on exciting projects in a dynamic and collaborative environment, we would love to hear from you!</li>
-                                                    </ul>
-                                                </div>
-                                                <div>
-                                                    <h3 className="text-lg font-semibold mb-3">Skills Required</h3>
-                                                    <ul className="text-gray-800 text-sm">
-                                                        <li className="mb-2">Strong understanding of JavaScript, React.js, and Node.js</li>
-                                                        <li className="mb-2">Experience with MongoDB or other NoSQL databases</li>
-                                                        <li className="mb-2">Knowledge of GraphQL, Redux, or TypeScript is a plus</li>
-                                                        <li className="mb-2">Excellent problem-solving skills</li>
-                                                        <li className="mb-2">Strong communication and collaboration skills</li>
-                                                    </ul>
-                                                    <div className="mt-8">
-                                                        <h3 className="text-lg font-semibold mb-3">Company Information</h3>
-                                                        <p className="text-gray-800 text-sm mb-2">Company:<span className="font-semibold"> Konisagg Developing and Consulting Tech</span></p>
-                                                        <p className="text-gray-800 text-sm mb-2">Location:<span className="font-semibold"> New York, NY</span></p>
-                                                        <p className="text-gray-800 text-sm mb-2">Industry:<span className="font-semibold"> Technology</span></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="cursor-pointer text-gray-800 text-center font-semibold italic hover:underline" onClick={handleApplyJob}>
-                                                apply now
-                                            </div>
-                                        </div>
-                                    </div>
-                                ) : (
-                                    <div></div>
-                                )
-                            }
-                        </div>
-                        <p className="text-gray-600 text-base md:text-base mt-10 italic text-center">explore more jobs from
-                            <span className="text-lg font-semibold text-pink-500 cursor-pointer underline"> Konisagg Developing and consulting Tech</span>
-                        </p>
+                        ) : (
+                            <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 custom-scrollbar px-3 w-full">
+                                {cardsData.map((card) => (
+                                    <Card
+                                        id={card.career._id}
+                                        key={card.id}
+                                        cardInfo={card}
+                                        isHovered={hoveredCard === card.id}
+                                        onMouseEnter={() => handleMouseEnter(card.id)}
+                                        onMouseLeave={handleMouseLeave}
+                                        isSelected={selectedCards.includes(card.career._id)}
+                                        onSelect={() => handleSelectCard(card.career._id)}
+                                    />
+                                ))}
+                            </div>
+                        )}
+
                     </div>
-
-
                 </div>
             </div>
         </div>

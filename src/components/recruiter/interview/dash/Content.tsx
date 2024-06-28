@@ -1,30 +1,51 @@
-import Mainbody from "./Mainbody"
-import Sidebar from "../../Sidebar"
-import Navbar from "../../Navbar"
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+
+import { AppRootState } from "../../../../redux/store";
+import Mainbody from "./Mainbody";
+import Sidebar from "../../Sidebar";
+import Chat from '../../../messages/content'
+import Notification from '../../../notifications/content'
 
 const Content = () => {
-  const navbarItems = [
-    { label: 'Home', href: '/' },
-    { label: 'About', href: '/about' },
-    { label: 'Contact', href: '/contact' },
-    { label: 'resource', href: '/resourse' },
-  ];
+  const [activePage, setActivePage] = useState('schedules');
+  const { activeMenu } = useSelector((state: AppRootState) => state.active);
+  const [sidebarStyle, setSidebarStyle] = useState<{ transform?: string, transition?: string }>({});
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    if (isMounted) {
+        if (activeMenu) {
+            setSidebarStyle({
+                transform: 'translateX(0)',
+                transition: 'transform 0.3s ease-in-out',
+            });
+        } else {
+            setSidebarStyle({
+                transform: 'translateX(-400px)',
+                transition: 'transform 0.3s ease-in-out',
+            });
+        }
+    } else {
+        setIsMounted(true);
+    }
+}, [activeMenu, isMounted]);
+
   return (
     <div>
-      <div className="h-[60px]">
-        <Navbar items={navbarItems} />
-      </div>
-      <div className="flex min-h-screen flex-auto flex-shrink-0 bg-gray-50 text-gray-800 antialiased">
-        <div className="w-64">
-          <Sidebar />
+      <div className="flex min-h-screen flex-auto flex-shrink-0 bg-[#f8fafa] text-gray-800 antialiased">
+        <div className="w-60 relative">
+          <Sidebar activePage={activePage} setActivePage={setActivePage} />
+          <div
+            className={`fixed ${activeMenu ? 'left-[240px]' : '-left-[240px]'} bg-[#f8fafa] border-r border-gray-200 shadow-md w-[400px] h-screen`}
+            style={{ ...sidebarStyle, }}>
+            {activeMenu === "messages" ? <Chat role="recruiter" /> : <Notification role="recruiter" />}
+          </div>
         </div>
         <Mainbody />
       </div>
-    </div>
-  )
+    </div >
+  );
 }
 
-export default Content
-
-// bg-[#c9d3df]
-// #EBF5FF
+export default Content;

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 function Card({ id, title, content, isHovered, onMouseEnter, onMouseLeave }: {
     id: string;
     title: string;
-    content: string;
+    content: string[];
     isHovered: boolean;
     onMouseEnter: () => void;
     onMouseLeave: () => void;
@@ -24,7 +24,7 @@ function Card({ id, title, content, isHovered, onMouseEnter, onMouseLeave }: {
         >
             <div className="flex flex-col flex-grow w-5/6">
                 <h3 className={`text-xs font-semibold mb-1 `}>{title}</h3>
-                <p className={`text-gray-600 text-[0.6rem] flex-grow max-h-[40px] overflow-hidden `}>{"helooooo"}</p>
+                <p className={`text-gray-600 text-[0.6rem] flex-grow max-h-[40px] overflow-hidden `}>{content[0]}</p>
             </div>
         </div>
     );

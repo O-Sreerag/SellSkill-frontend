@@ -18,41 +18,39 @@ const CalendarComponent = ({ onDateTimeChange }: any) => {
 
         onDateTimeChange({ date, time: selectedTime?.format('HH:mm:ss') });
     };
-    
+
     const handleTimeChange = (time: dayjs.Dayjs | null) => {
         setSelectedTime(time);
         console.log(time?.format('HH:mm:ss'));
 
-        onDateTimeChange({ date: selectedDate, time: time?.format('HH:mm:ss')});
+        onDateTimeChange({ date: selectedDate, time: time?.format('HH:mm:ss') });
     };
 
     return (
-        <div className='flex flex-grow flex-shrink p-2 gap-5 justify-between'>
-            <div className='w-full flex flex-col items-center'>
-                <div className='space-y-2'>
-                    <p className="barlow-semibold text-base text-gray-800">Date and Time</p>
-                    <div className='flex gap-1'>
-                        <SlCalender className='w-3' />
-                        <p className='text-xs'>{selectedDate.toLocaleDateString()}</p>
-                    </div>
-                    <div>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DemoContainer components={['TimePicker']}>
-                                <TimePicker
-                                    label="Basic time picker"
-                                    value={selectedTime}
-                                    onChange={handleTimeChange}
-                                />
-                            </DemoContainer>
-                        </LocalizationProvider>
-                    </div>
+        <div className='w-full flex flex-col items-end gap-2'>
+            <div className='space-y-2'>
+                <p className="barlow-semibold text-base text-gray-800">Date and Time</p>
+                <div className='flex gap-1'>
+                    <SlCalender className='w-3' />
+                    <p className='text-xs'>{selectedDate.toLocaleDateString()}</p>
                 </div>
-            </div>
-            <div className="pt-3">
-                <Calendar
-                    onChange={handleDateChange}
-                    value={selectedDate}
-                />
+                <div className="pt-3">
+                    <Calendar
+                        onChange={handleDateChange}
+                        value={selectedDate}
+                    />
+                </div>
+                <div className='w-[85%]'>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DemoContainer components={['TimePicker']}>
+                            <TimePicker
+                                label="Basic time picker"
+                                value={selectedTime}
+                                onChange={handleTimeChange}
+                            />
+                        </DemoContainer>
+                    </LocalizationProvider>
+                </div>
             </div>
         </div>
     );

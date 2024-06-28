@@ -1,8 +1,9 @@
-import { IoMdArrowDropright } from "react-icons/io";
+import { IoIosToday, IoMdArrowDropright } from "react-icons/io";
 import { BsPeople, BsPerson, BsPersonFill, BsFillPeopleFill } from "react-icons/bs";
 import { MouseEvent, useState } from "react";
 import { IoIosTimer } from "react-icons/io";
 import { IoMdLaptop } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 import './Mainbody.css'
 import MultiTextBox from "./MultiTextBox";
@@ -11,12 +12,18 @@ import Navbar2 from "../../../applicant/Navbar2";
 import dayjs from "dayjs";
 import { api } from "../../../../services/axios";
 import { toast } from "react-toastify";
+import { NotificationType } from "../../../../types/interface";
 
 const Mainbody = () => {
+    const navigate = useNavigate()
+
     const [duration, setDuration] = useState(10);
     const [eventName, setEventName] = useState("New Event");
     const [eventType, setEventType] = useState("one_on_one");
-    const [emails, setEmails] = useState<string[]>([]);
+    const [hostEmail, setHostEmail] = useState<string | null>(null);
+    const [candidateEmail, setCandidateEmail] = useState<string | null>(null);
+    const [hostsEmails, setHostsEmails] = useState<string[]>([]);
+    const [candidatesEmails, setCandidatesEmails] = useState<string[]>([]);
     const [date, setDate] = useState(new Date());
     const [time, setTime] = useState<dayjs.Dayjs | null>(null);
 
@@ -61,9 +68,23 @@ const Mainbody = () => {
         setEventType(type);
     };
 
-    const handleEmailsChange = (data: string[]) => {
-        setEmails(data);
-    };
+    const handleHostEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value;
+        setHostEmail(value);
+    }
+
+    const handleCandidateEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value;
+        setCandidateEmail(value);
+    }
+
+    const handleHostsEmailsChange = (data: string[]) => {
+        setHostsEmails(data);
+    }
+
+    const handleCandidatesEmailsChange = (data: string[]) => {
+        setCandidatesEmails(data);
+    }
 
     const handleDateTimeChange = (dateTimeData: any) => {
         console.log("dateTimeData")
@@ -74,11 +95,39 @@ const Mainbody = () => {
 
     const handleSubmit = async (event: MouseEvent<HTMLButtonElement>) => {
         console.log("handle Submit")
+        event.preventDefault();
+
+        const currentTime = dayjs();
+        // const selectedTime = time;
+        const isToday = dayjs(date).isSame(currentTime, 'day');
+        console.log("currentTime", currentTime)
+        // console.log("selectedTime", selectedTime)
+        console.log("isToday", isToday)
+
+        if (!eventType) {
+            toast.error("Event type cannot be empty.");
+            return;
+        }
+
+        if (!time) {
+            toast.error("Time cannot be empty.");
+            return;
+        }
+
+        // if (selectedTime && isToday && selectedTime.isBefore(currentTime.add(5, 'minute'))) {
+        //     console.log("kjdfn")
+        //     toast.error("The time should be at least 5 minutes ahead of the current time.");
+        //     return;
+        // }
+
         const formDataObject = {
             duration,
             eventName,
             eventType,
-            emails,
+            host: hostEmail,
+            candidate_email: candidateEmail,
+            team: hostsEmails,
+            candidates_emails: candidatesEmails,
             date,
             time: time,
         };
@@ -90,7 +139,7 @@ const Mainbody = () => {
             if (response.status === 200) {
                 console.log(response.data);
                 toast.success("Interview created successfully");
-                
+
                 const formDataObject2 = {
                     job_type: response.data.result.eventType,
                     host: response.data.result.host,
@@ -100,13 +149,34 @@ const Mainbody = () => {
                     interviewId: response.data.result._id,
                 }
                 console.log(formDataObject2)
-                
+
                 const response2 = await api.post('./interview/common/sendMail', formDataObject2)
-                if(response2.status === 200) {
-                    console.log("comform emails has sent successfully")
+                if (response2.status === 200) {
+                    console.log(`comform emails has sent successfully`, response2.data?.verification)
                     toast.success("comform emails has sent successfully");
-                } else {                    
+
+                    navigate(`/recruiter/schedules`)
+                } else {
                     console.log("email sending failed")
+                }
+
+                // Create notification data
+                const notificationData1 = {
+                    type: NotificationType.InterviewCreated,
+                    userId: response.data?.result?.recruiterId,
+                    role: 'recruiter',
+                    message: `A new interview has been scheduled "${eventName}" has been created!`,
+                    interviewId: response.data?.result?._id,
+                    read: false,
+                };
+
+                const notificationResponse1 = await api.post('/chat/notification/create', notificationData1);
+
+                if (notificationResponse1.status === 200) {
+                    console.log('Notification created successfully');
+                    toast.success('Notification created successfully');
+                } else {
+                    toast.error('Failed to create notification. Please try again later.');
                 }
 
             } else {
@@ -132,7 +202,7 @@ const Mainbody = () => {
                                 <p className="text-gray-600">Schedule a new Event or Meet.</p>
                             </div>
                             <div className="w-1/4 flex justify-end">
-                                <button className="hover:bg-[#2a2929] bg-black text-white font-sans py-1 px-8 rounded shadow-md" onClick={handleSubmit}>
+                                <button className="hover:bg-pink-400 bg-pink-500 text-white font-sans py-1 px-8 rounded shadow-md" onClick={handleSubmit}>
                                     Continue
                                 </button>
                             </div>
@@ -145,14 +215,14 @@ const Mainbody = () => {
                             <hr className="bg-gray-700 p-[1px]" />
 
                             <p className=" barlow-semibold text-base text-gray-800" >event name</p>
-                            <input type="text" name="event_name" className="border border-gray-300 text-sm rounded-md p-2 mt-1 w-full" onChange={handleNameChange} placeholder="New Event" />
+                            <input type="text" name="event_name" className="border-2 border-gray-300 focus:outline-none focus:border-blue-500 text-sm rounded-md p-2 mt-1 w-full" onChange={handleNameChange} placeholder="New Event" />
 
                             <div>
                                 <p className=" barlow-semibold text-base text-gray-800 mt-1">event duration</p>
                                 <select
                                     value={duration}
                                     onChange={handleDurationChange}
-                                    className="border border-gray-300 text-sm rounded-md p-2 mt-1 w-full bg-white text-black"
+                                    className="border-2 border-gray-300 focus:outline-none focus:border-blue-500 text-sm rounded-md p-2 mt-1 w-full bg-white text-black"
                                 >
                                     <option value="10" style={{ backgroundColor: 'gray', color: 'white' }}>10 mins</option>
                                     <option value="15" style={{ backgroundColor: 'gray', color: 'white' }}>15 mins</option>
@@ -205,29 +275,39 @@ const Mainbody = () => {
                             </div>
                         </div>
 
-                        <div className="w-full p-2">
+                        <div className="w-full px-4 py-2">
                             <div className=" rounded-md border-t-[25px] min-h-[250px] shadow-md flex justify-between p-4 gap-4">
-                                <div className="w-1/3 space-y-1">
+                                <div className="w-1/2 space-y-1">
                                     <p className=" font-extrabold text-gray-800">{eventName}</p>
                                     <div className="flex items-center gap-2"><IoIosTimer /><span className="text-sm">{formatDuration(duration)}</span></div>
                                     <div className="flex items-center gap-2"><IoMdLaptop /><span className="text-sm">{formatType(eventType)}</span></div>
                                     <div >
                                         {
-                                            eventType == "1" ? (
+                                            eventType == "one_on_one" ? (
                                                 <>
                                                     <p className="mt-2 text-gray-500 text-sm">add host email and then invitee email</p>
-                                                    <MultiTextBox onDataUpdate={handleEmailsChange} />
+                                                    {/* <MultiTextBox onDataUpdate={handleEmailsChange} /> */}
+                                                    <div className="flex flex-col gap-2 mt-2">
+                                                        <input type="text" name="host_email" className="border-2 border-gray-300 focus:outline-none focus:border-blue-500 text-sm rounded-md p-2 mt-1 w-full" onChange={handleHostEmailChange} placeholder="Host email" />
+                                                        <input type="text" name="candidate_email" className="border-2 border-gray-300 focus:outline-none focus:border-blue-500 text-sm rounded-md p-2 mt-1 w-full" onChange={handleCandidateEmailChange} placeholder="Candidate Email" />
+                                                    </div>
                                                 </>
                                             ) : (
-                                                eventType == "2" ? (
+                                                eventType == "group" ? (
                                                     <>
                                                         <p className="mt-2 text-gray-500 text-sm">add host email and then invitees emails</p>
-                                                        <MultiTextBox onDataUpdate={handleEmailsChange} />
+                                                        <div className="flex flex-col gap-2 mt-2">
+                                                            <input type="text" name="host_email" className="border-2 border-gray-300 focus:outline-none focus:border-blue-500 text-sm rounded-md p-2 mt-1 w-full" onChange={handleHostEmailChange} placeholder="Host email" />
+                                                            <MultiTextBox onDataUpdate={handleCandidatesEmailsChange} />
+                                                        </div>
                                                     </>
                                                 ) : (
                                                     <>
-                                                        <p className="mt-2 text-gray-500 text-sm">add hosts emails and then invitee email</p>
-                                                        <MultiTextBox onDataUpdate={handleEmailsChange} />
+                                                        <p className="mt-2 text-gray-500 text-sm">add hosts emails and then invitees email</p>
+                                                        <div className="flex gap-2 mt-2">
+                                                            <MultiTextBox onDataUpdate={handleHostsEmailsChange} />
+                                                            <MultiTextBox onDataUpdate={handleCandidatesEmailsChange} />
+                                                        </div>
                                                     </>
                                                 )
                                             )
@@ -235,7 +315,7 @@ const Mainbody = () => {
 
                                     </div>
                                 </div>
-                                <div className="w-2/3">
+                                <div className="w-1/2">
                                     <CalendarComponent onDateTimeChange={handleDateTimeChange} />
                                 </div>
                             </div>

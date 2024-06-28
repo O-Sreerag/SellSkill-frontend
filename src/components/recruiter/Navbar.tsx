@@ -6,9 +6,31 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ items }) => {
 
+    const [isScrolled, setIsScrolled] = useState(false);
+    const [scrollPosition, setScrollPosition] = useState(0);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollTop = window.pageYOffset;
+            setScrollPosition(scrollTop);
+            if (scrollTop > 10) {
+                setIsScrolled(true);
+            } else {
+                setIsScrolled(false);
+            }
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
     return (
-        <nav className='flex justify-center bg-[#fff] border-b-2 w-full shadow-sm fixed top-0 z-10'>
-            <div className={`px-5 py-5 w-full max-w-[1400px]`}>
+        <nav className='flex justify-center'>
+            <div className={`fixed transition-all duration-1000
+                    ${isScrolled ? 'py-2.5 px-4 top-5 rounded-2xl w-[62%] bg-white shadow-md' : 'px-36 py-10 w-full'}`}
+                style={{ maxHeight: `${isScrolled && scrollPosition > 30 ? '65px' : 'unset'}` }}>
+
                 <div className="flex items-center justify-between">
                     <div className="flex items-center flex-shrink-0 text-gray-800 mr-6 gap-1">
                         <img src="/public/logo.png" alt="logo" width={23} />
@@ -16,7 +38,7 @@ const Navbar: React.FC<NavbarProps> = ({ items }) => {
                     </div>
                     <div className="flex">
                         {items.map((item, index) => (
-                            <a key={index} href={item.href} className={`text-gray-600 px-3 py-1 rounded-md text-xs font-semibold hover:bg-gray-200`}>
+                            <a key={index} href={item.href} className={`text-gray-600 px-3 py-1 rounded-md text-xs font-semibold ${isScrolled ? 'hover:bg-gray-200' : 'hover:bg-[#abc7e3]'}`}>
                                 {item.label}
                             </a>
                         ))}
@@ -32,4 +54,3 @@ const Navbar: React.FC<NavbarProps> = ({ items }) => {
 };
 
 export default Navbar;
-//    <div>

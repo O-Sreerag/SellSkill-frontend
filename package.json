@@ -20,6 +20,7 @@
     "@mui/x-date-pickers": "^7.3.2",
     "@react-oauth/google": "^0.12.1",
     "@reduxjs/toolkit": "^2.2.3",
+    "@zegocloud/zego-uikit-prebuilt": "^2.3.0",
     "axios": "^1.6.8",
     "dayjs": "^1.11.11",
     "dotenv": "^16.4.5",
@@ -37,12 +38,15 @@
     "react-typed": "^2.0.12",
     "redux-persist": "^6.0.0",
     "slick-carousel": "^1.8.1",
-    "yup": "^1.4.0"
+    "socket.io-client": "^4.7.5",
+    "yup": "^1.4.0",
+    "zego-express-engine-webrtc": "^3.4.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@types/react-slick": "^0.23.13",
+    "@types/socket.io-client": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
     "@vitejs/plugin-react": "^4.2.1",
