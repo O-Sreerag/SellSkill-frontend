@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { api } from "../../services/axios";
 
 import { HiDotsVertical } from "react-icons/hi";
-import { FaAnglesLeft, FaAnglesRight } from "react-icons/fa6";
+import { FaAnglesRight } from "react-icons/fa6";
 import { IoSearch } from "react-icons/io5";
 import { GiPlainCircle } from "react-icons/gi";
 
@@ -40,6 +40,8 @@ const Content = ({ role }: ContentProps) => {
   const [selectedWindow, setSelectedWindow] = useState("list") // list or details
   const [notifications, setNotifications] = useState<Notification[]>([])
   const [selectedNotification, setSelectedNotification] = useState<Notification | null>(null)
+
+  console.log(selectedWindow, selectedNotification)
 
   const handleNotificationsNotifications = (eachNotification: Notification) => () => {
     console.log("handleNotificationNotifications")

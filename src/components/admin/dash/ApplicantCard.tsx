@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { RiUserForbidFill, RiUserReceivedFill, RiUserStarFill, RiUserUnfollowFill } from "react-icons/ri";
+import { RiUserForbidFill, RiUserStarFill } from "react-icons/ri";
+// import {  RiUserReceivedFill, RiUserUnfollowFill } from "react-icons/ri";
 import { adminApi } from "../../../services/axios";
 
 interface applicantsCardData {
@@ -26,6 +27,7 @@ function ApplicantCard({ applicantData, connectedStatus }: {
 
     const [status, setStatus] = useState(applicantData.status)
     const [applicant, setApplicant] = useState(applicantData)
+    console.log("applicant", applicant)
 
     const handleBlock = async () => {
         console.log("handle Block")

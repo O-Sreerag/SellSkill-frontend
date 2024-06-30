@@ -37,8 +37,9 @@ function Card({ interview, isHovered, onMouseEnter, onMouseLeave, isSelected, on
 }) {
 
     const [linkCopied, setLinkCopied] = useState(false)
+    console.log("linkCopied", linkCopied)
     const navigate = useNavigate();
-    const { userName = 'name', userEmail = 'email' } = useSelector((state: AppRootState) => state.user)
+    const { userName = 'name' } = useSelector((state: AppRootState) => state.user)
 
     const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();

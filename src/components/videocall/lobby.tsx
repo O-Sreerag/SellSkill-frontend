@@ -50,6 +50,7 @@ const Lobby = () => {
         if (roomID) {
             setRoom(roomID)
         }
+        console.log("setEmail", setEmail)
     }, [])
 
     const generateRoomId = (): string => {

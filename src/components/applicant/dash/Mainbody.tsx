@@ -9,7 +9,7 @@ import { IoNotifications } from "react-icons/io5"
 import { LuMessagesSquare } from "react-icons/lu"
 
 const Mainbody = () => {
-    const { userName = 'name', userEmail = 'email' } = useSelector((state: AppRootState) => state.user)
+    const { userName = 'name'} = useSelector((state: AppRootState) => state.user)
 
     return (
         <div className="flex justify-center w-full bg-white">

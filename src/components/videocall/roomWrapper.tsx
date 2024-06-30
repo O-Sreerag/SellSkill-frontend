@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import Room from './content';
 import HostPanel from './hostPanel';
-import { AppRootState } from '../../redux/store';
+// import { AppRootState } from '../../redux/store';
 
 const useQuery = () => {
     return new URLSearchParams(useLocation().search);

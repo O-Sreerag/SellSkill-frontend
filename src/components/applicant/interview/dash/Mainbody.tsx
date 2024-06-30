@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 import { IoTrashOutline } from "react-icons/io5";
 import { RxCross1 } from "react-icons/rx";
@@ -32,7 +32,7 @@ interface InterviewData {
 }
 
 const Mainbody = () => {
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     const [cardsData, setCardsData] = useState<InterviewData[]>([]);
     const [hoveredCard, setHoveredCard] = useState(null);
     const [selectedCards, setSelectedCards] = useState<string[]>([]);

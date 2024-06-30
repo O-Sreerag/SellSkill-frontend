@@ -3,7 +3,7 @@ import { api } from "../../services/axios";
 import Chat from './chat'
 
 import { HiDotsVertical } from "react-icons/hi";
-import { FaAnglesLeft, FaAnglesRight } from "react-icons/fa6";
+import { FaAnglesRight } from "react-icons/fa6";
 import { IoSearch } from "react-icons/io5";
 
 export interface MessageData {

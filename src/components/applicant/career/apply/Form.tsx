@@ -1,4 +1,4 @@
-import axios from 'axios';
+// import axios from 'axios';
 import { FormEvent, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
@@ -40,7 +40,7 @@ export const Form = () => {
     const careerId = new URLSearchParams(search).get('careerId');
     const [career, setCareer] = useState<careerData | null>(null)
 
-    const [formData, setFormData] = useState({});
+    // const [formData, setFormData] = useState({});
     const [TextBoxclick, setTextBoxclick] = useState<number>(0)
     const [skillSet, setSkillSet] = useState<string[]>([]);
     const [qualifications, setQualifications] = useState<string[]>([]);

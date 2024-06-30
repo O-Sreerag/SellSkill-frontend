@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import Navbar2 from '../../Navbar2'
-import axios from 'axios'
+// import axios from 'axios'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { api } from '../../../../services/axios'
 
 import { RxCross2 } from 'react-icons/rx'
-import { IoIosArrowDropdown, IoMdArrowDropdown } from 'react-icons/io'
+import { IoIosArrowDropdown } from 'react-icons/io'
 
 interface careerData {
     _id?: string;
@@ -79,7 +79,7 @@ const Mainbody = () => {
                 console.log("fetching all careers from recruiter :", recruiterId)
                 const response = await api.get(`/career/getAllCareersFromRecruiter/${recruiterId}`)
                 console.log(response.data)
-                const data = response.data.result;
+                // const data = response.data.result;
 
             } catch (error) {
                 console.error('Error fetching data:', error);

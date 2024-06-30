@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import Navbar2 from '../Navbar2'
-import axios from 'axios'
-import { useLocation, useNavigate } from 'react-router-dom'
+// import axios from 'axios'
+// import { useNavigate } from 'react-router-dom'
 import { adminApi } from '../../../services/axios'
 import ApplicantCard from './ApplicantCard'
 
-import { IoIosArrowDropdown, IoMdArrowDropdown } from 'react-icons/io'
-import { RiUserStarFill, RiUserUnfollowFill, RiUserReceivedFill } from 'react-icons/ri'
+// import { IoIosArrowDropdown, IoMdArrowDropdown } from 'react-icons/io'
+// import { RiUserStarFill, RiUserUnfollowFill, RiUserReceivedFill } from 'react-icons/ri'
 import { useSelector } from 'react-redux'
 import { AppRootState } from '../../../redux/store'
 import RecruiterCard from './recruiterCard'
@@ -48,15 +48,14 @@ interface recruitersCardData {
 }
 
 const Mainbody = () => {
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     const { adminEmail = "" } = useSelector((state: AppRootState) => state.admin)
 
-    const [hoveredCard, setHoveredCard] = useState(1);
     const [dropDownValue, setDropDownValue] = useState<DropDownValues>(DropDownValues.Applicants);
     const [applicantsCardData, setApplicantsCardData] = useState<applicantsCardData[]>([])
     const [recruitersCardData, setRecruitersCardData] = useState<recruitersCardData[]>([])
-    const [showStatus, setShowStatus] = useState(false)
-
+    // const [showStatus, setShowStatus] = useState(false)
+    
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -94,12 +93,12 @@ const Mainbody = () => {
         setDropDownValue(event.target.value as DropDownValues);
     };
 
-    const handleMouseEnter = (id: any) => {
-        setHoveredCard(id);
-    };
-    const handleMouseLeave = () => {
-        setHoveredCard(1);
-    };
+    // const handleMouseEnter = (id: any) => {
+    //     setHoveredCard(id);
+    // };
+    // const handleMouseLeave = () => {
+    //     setHoveredCard(1);
+    // };
 
     return (
         <div className="flex justify-center w-full bg-white">

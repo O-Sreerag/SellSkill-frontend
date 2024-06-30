@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { RiUserForbidFill, RiUserReceivedFill, RiUserStarFill, RiUserUnfollowFill } from "react-icons/ri";
+import { RiUserForbidFill, RiUserStarFill } from "react-icons/ri";
 import { adminApi } from "../../../services/axios";
 
 interface recruitersCardData {
@@ -25,6 +25,7 @@ function RecruiterCard({ recruiterData, connectedStatus }: {
 
     const [status, setStatus] = useState(recruiterData.status)
     const [recruiter, setRecruiter] = useState(recruiterData)
+    console.log("recruiter", recruiter)
 
     const handleBlock = async () => {
         console.log("handle Block")
