@@ -147,25 +147,25 @@ export const Form = () => {
                 console.log(response.data);
                 toast.success("Career created successfully");
 
-                // Create notification data
-                const notificationData = {
-                    type: NotificationType.CareerCreated,
-                    userId: response.data?.result?.recruiterId,
-                    role: 'recruiter',
-                    message: `A new career opportunity "${posting_title}" has been created!`,
-                    careerId: response.data?.result?._id,
-                    read: false,
-                };
+                // // Create notification data
+                // const notificationData = {
+                //     type: NotificationType.CareerCreated,
+                //     userId: response.data?.result?.recruiterId,
+                //     role: 'recruiter',
+                //     message: `A new career opportunity "${posting_title}" has been created!`,
+                //     careerId: response.data?.result?._id,
+                //     read: false,
+                // };
 
-                // Create notification API call
-                const notificationResponse = await api.post('/chat/notification/create', notificationData);
+                // // Create notification API call
+                // const notificationResponse = await api.post('/chat/notification/create', notificationData);
 
-                if (notificationResponse.status === 200) {
-                    console.log('Notification created successfully');
-                    toast.success('Notification created successfully');
-                } else {
-                    toast.error('Failed to create notification. Please try again later.');
-                }
+                // if (notificationResponse.status === 200) {
+                //     console.log('Notification created successfully');
+                //     toast.success('Notification created successfully');
+                // } else {
+                //     toast.error('Failed to create notification. Please try again later.');
+                // }
 
                 navigate('/recruiter/career');
             } else {
