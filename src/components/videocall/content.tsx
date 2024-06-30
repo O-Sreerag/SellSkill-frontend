@@ -101,7 +101,7 @@
 // export default Room
 
 
-import React from 'react'
+// import React from 'react'
 import { useParams } from 'react-router-dom'
 import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
 import { AppRootState } from '../../redux/store';
@@ -109,7 +109,7 @@ import { useSelector } from 'react-redux';
 
 const Room = () => {
   const { roomID = "1" } = useParams()
-  const { userName = 'name', userEmail = 'email' } = useSelector((state: AppRootState) => state.user)
+  const { userName = 'name' } = useSelector((state: AppRootState) => state.user)
 
   function randomID(len: any) {
     let result = '';

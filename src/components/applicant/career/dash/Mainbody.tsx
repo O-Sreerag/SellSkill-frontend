@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import Navbar2 from '../../Navbar2'
-import { useLocation, useNavigate } from 'react-router-dom'
+// import { useLocation, useNavigate } from 'react-router-dom'
 import { api } from '../../../../services/axios'
 
-import { RxCross1, RxCross2 } from 'react-icons/rx'
-import { IoIosArrowDropdown, IoMdArrowDropdown } from 'react-icons/io'
-import { RiUserStarFill, RiUserUnfollowFill, RiUserReceivedFill } from 'react-icons/ri'
+import { RxCross1 } from 'react-icons/rx'
+// import { RxCross2 } from 'react-icons/rx'
+// import { IoIosArrowDropdown, IoMdArrowDropdown } from 'react-icons/io'
+// import { RiUserStarFill, RiUserUnfollowFill, RiUserReceivedFill } from 'react-icons/ri'
 import { useSelector } from 'react-redux'
 import { AppRootState } from '../../../../redux/store'
 import Card from './card'
@@ -99,7 +100,7 @@ const Mainbody = () => {
         );
     };
 
-    const [showStatus, setShowStatus] = useState(false)
+    // const [showStatus, setShowStatus] = useState(false)
     const handleDropDownChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setDropDownValue(event.target.value as DropDownValues);
     };

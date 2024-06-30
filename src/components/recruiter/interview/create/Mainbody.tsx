@@ -1,4 +1,4 @@
-import { IoIosToday, IoMdArrowDropright } from "react-icons/io";
+import { IoMdArrowDropright } from "react-icons/io";
 import { BsPeople, BsPerson, BsPersonFill, BsFillPeopleFill } from "react-icons/bs";
 import { MouseEvent, useState } from "react";
 import { IoIosTimer } from "react-icons/io";

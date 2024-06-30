@@ -9,7 +9,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 // Import ProtectedRoute and PublicRoute
-import { AdminProtectedRoute, AdminPublicRoute, RecruiterProtectedRoute, ApplicantProtectedRoute, PublicRoute, ProtectedRoute } from './utils/protected';
+import { AdminProtectedRoute, AdminPublicRoute, RecruiterProtectedRoute, ApplicantProtectedRoute, PublicRoute } from './utils/protected';
+// import { ProtectedRoute } from './utils/protected';
 
 // // pages
 import Home from './components/home/Content'
@@ -44,7 +45,7 @@ import ApplicantApplications from './components/applicant/applications/dash/Cont
 
 import Room from './components/videocall/content'
 import Lobby from './components/videocall/lobby'
-import RoomWrapper from './components/videocall/roomWrapper'
+// import RoomWrapper from './components/videocall/roomWrapper'
 
 function App() {
 

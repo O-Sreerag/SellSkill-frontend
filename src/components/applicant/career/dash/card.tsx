@@ -1,8 +1,8 @@
 // export default Card;
 import { useNavigate } from "react-router-dom";
 import { IoSettingsOutline } from "react-icons/io5";
-import { PiCopySimple } from "react-icons/pi";
-import { useState } from "react";
+// import { PiCopySimple } from "react-icons/pi";
+// import { useState } from "react";
 
 interface CardData {
     id?: number;
