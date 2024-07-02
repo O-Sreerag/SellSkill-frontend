@@ -35,6 +35,7 @@ function Card({ id, cardInfo, isHovered, onMouseEnter, onMouseLeave, isSelected,
             await navigator.clipboard.writeText(cardInfo.url);
             setLinkCopied(true);
             setTimeout(() => setLinkCopied(false), 2000);
+            console.log("linkCopied", linkCopied)
         } catch (err) {
             console.error('Failed to copy text: ', err);
         }

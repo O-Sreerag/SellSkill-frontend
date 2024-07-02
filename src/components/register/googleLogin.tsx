@@ -1,5 +1,5 @@
 import { useState, useEffect} from 'react';
-import { googleLogout, useGoogleLogin} from '@react-oauth/google';
+import { useGoogleLogin} from '@react-oauth/google';
 import axios from 'axios';
 import { FcGoogle } from 'react-icons/fc';
 import { useNavigate } from 'react-router-dom';
@@ -31,6 +31,7 @@ function GoogleLoginButton() {
                             Accept: 'application/json'
                         }
                     });
+                    console.log(userinfoRes)
                     
                     const googleLoginRes = await axios.get(`http://sellskill.online/auth/googleLogin?access_token=${user.access_token}`);
                     console.log(googleLoginRes.data);

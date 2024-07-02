@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { AppRootState } from '../../redux/store'
 import { useSelector } from 'react-redux'
 import { FaUserTie } from 'react-icons/fa'

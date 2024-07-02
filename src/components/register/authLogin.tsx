@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 import { jwtDecode } from "jwt-decode";
 
 import Navbar from "./Navbar";
-import GoogleLoginButton from "./googleLogin";
+// import GoogleLoginButton from "./googleLogin";
 import axios from "axios";
 import { AppRootState } from '../../redux/store';
 import { userLogin } from "../../redux/slices/userAuthSlice";
@@ -25,6 +25,7 @@ const AuthLogin = () => {
     const [resendEmailTapped, setResendEmailTapped] = useState(false)
     const [resendEmail, setResendEmail] = useState("")
     const [resendEmailError, setresendEmailError] = useState(null)
+    console.log("setresendEmailError", setresendEmailError)
 
     useEffect(() => {
         if (cooldown > 0) {

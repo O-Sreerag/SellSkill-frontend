@@ -24,6 +24,7 @@ interface ApplicantProfie {
 
 const Mainbody = () => {
     const [img, setImage] = useState(null)
+    console.log("setImage", setImage)
     const [editClicked, setEditClicked] = useState(false)
     const { userName = 'Name', userEmail = 'email', userProfile = { fullName: "", age: "", gender: "", country: "", region: "" } } = useSelector((state: AppRootState) => state.user)
     const [errors, setErrors] = useState<{ [key: string]: string }>({});

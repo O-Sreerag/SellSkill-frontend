@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react"
-import axios from "axios";
+// import axios from "axios";
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './Mainbody.css'
 import { CiMenuKebab } from "react-icons/ci";
-import { IoMdArrowDropdown } from "react-icons/io";
-import { RiUserReceivedFill, RiUserStarFill, RiUserUnfollowFill } from "react-icons/ri";
+// import { IoMdArrowDropdown } from "react-icons/io";
+// import { RiUserReceivedFill, RiUserStarFill, RiUserUnfollowFill } from "react-icons/ri";
 
 import Card from "./Card";
 import { CustomNextArrow, CustomPrevArrow } from "./slider";
 import Navbar2 from "../../Navbar2"
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { api } from "../../../../services/axios";
 import ApplicationCard from "./ApplicationCard";
 import ApplicantCard from './applicantCard'
-import Sliders from "./Sliders";
+// import Sliders from "./Sliders";
 import { useSelector } from "react-redux";
 import { AppRootState } from "../../../../redux/store";
 
@@ -96,7 +96,7 @@ interface applicationsCardData {
 }
 
 const Mainbody = () => {
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     const { search } = useLocation();
     const careerId = new URLSearchParams(search).get('id');
 
@@ -105,9 +105,9 @@ const Mainbody = () => {
     const [dropDownValue, setDropDownValue] = useState<DropDownValues>(DropDownValues.Applications);
     const [applicationsCardData, setApplicationsCardData] = useState<applicationsCardData[]>([])
     const [applicantsCardData, setApplicantsCardData] = useState<applicantsCardData[]>([])
-    const [showStatus, setShowStatus] = useState(false)
+    // const [showStatus, setShowStatus] = useState(false)
     const [currentCareerInfo, setCurrentCareerInfo] = useState<Career | null>(null)
-    const { userName = 'Name', userEmail = 'email', userProfile = { companyName: "", industry: "", headquarters: "", ceo: "", founded: "", employees: "", revenue: "" } } = useSelector((state: AppRootState) => state.user);
+    const { userProfile = { companyName: "", industry: "", headquarters: "", ceo: "", founded: "", employees: "", revenue: "" } } = useSelector((state: AppRootState) => state.user);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -186,7 +186,7 @@ const Mainbody = () => {
         nextArrow: <CustomNextArrow />,
     };
 
-    const [menuActive, setMenuActive] = useState('applicants')
+    // const [menuActive, setMenuActive] = useState('applicants')
     console.log(cardsData, "card data")
 
     // const cardsblah = [
@@ -507,7 +507,3 @@ const Mainbody = () => {
 }
 
 export default Mainbody
-
-function useMemory(arg0: () => void, arg1: never[]) {
-    throw new Error("Function not implemented.");
-}

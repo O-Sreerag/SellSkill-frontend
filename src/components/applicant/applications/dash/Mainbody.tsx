@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import Navbar2 from '../../Navbar2'
-import axios from 'axios'
-import { useLocation, useNavigate } from 'react-router-dom'
+// import axios from 'axios'
+// import { useLocation, useNavigate } from 'react-router-dom'
 import { api } from '../../../../services/axios'
 
-import { RxCross2 } from 'react-icons/rx'
-import { IoIosArrowDropdown, IoMdArrowDropdown } from 'react-icons/io'
-import { RiUserStarFill, RiUserUnfollowFill, RiUserReceivedFill } from 'react-icons/ri'
+// import { RxCross2 } from 'react-icons/rx'
+// import { IoIosArrowDropdown, IoMdArrowDropdown } from 'react-icons/io'
+// import { RiUserStarFill, RiUserUnfollowFill, RiUserReceivedFill } from 'react-icons/ri'
 import { useSelector } from 'react-redux'
 import { AppRootState } from '../../../../redux/store'
 import ApplicationCard from "./ApplicationCard";
@@ -44,15 +44,15 @@ interface applicationsCardData {
 
 const Mainbody = () => {
     const [dropDownValue, setDropDownValue] = useState<DropDownValues>(DropDownValues.All);
-    const navigate = useNavigate()
-    const [isButtonTapped, setButtonTapped] = useState(false)
-    const { search } = useLocation();
-    const careerId = new URLSearchParams(search).get('id');
+    // const navigate = useNavigate()
+    // const [isButtonTapped, setButtonTapped] = useState(false)
+    // const { search } = useLocation();
+    // const careerId = new URLSearchParams(search).get('id');
     const { userName = 'name', userEmail = 'email' } = useSelector((state: AppRootState) => state.user)
     const [applicationsCardData, setApplicationsCardData] = useState<applicationsCardData[]>([])
 
-    const [hoveredCard, setHoveredCard] = useState(1);
-    const [showStatus, setShowStatus] = useState(false)
+    // const [hoveredCard, setHoveredCard] = useState(1);
+    // const [showStatus, setShowStatus] = useState(false)
 
     useEffect(() => {
         const fetchData = async () => {

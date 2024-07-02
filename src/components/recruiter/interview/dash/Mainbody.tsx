@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import axios from 'axios';
+// import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
 
 import { FaPlus } from "react-icons/fa";
 import { IoTrashOutline } from "react-icons/io5";

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { FaPlus } from "react-icons/fa";
+// import { FaPlus } from "react-icons/fa";
 import { ImProfile } from "react-icons/im";
 import { FiHome } from "react-icons/fi";
 import { SiGooglemeet } from "react-icons/si";
@@ -21,6 +21,7 @@ interface SidebarProps {
 }
 
 function Sidebar({ activePage, setActivePage, }: SidebarProps) {
+  console.log("setActivePage", setActivePage)
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
