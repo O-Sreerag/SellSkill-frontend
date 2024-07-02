@@ -1,4 +1,4 @@
-import { RxAvatar } from "react-icons/rx";
+// import { RxAvatar } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
 
 function Card({ id, title, content, isHovered, onMouseEnter, onMouseLeave }: {
@@ -21,6 +21,7 @@ function Card({ id, title, content, isHovered, onMouseEnter, onMouseLeave }: {
             className={`rounded-md my-3 p-3 flex gap-3 cursor-pointer border-t-[7px] items-center shadow-md ${isHovered ? 'border-t-pink-500 hovered' : 'border-gray-200'}`}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
+            onClick={handleClick}
         >
             <div className="flex flex-col flex-grow w-5/6">
                 <h3 className={`text-xs font-semibold mb-1 `}>{title}</h3>

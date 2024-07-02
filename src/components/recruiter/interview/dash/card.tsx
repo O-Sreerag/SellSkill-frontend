@@ -43,6 +43,7 @@ function Card({ interview, isHovered, onMouseEnter, onMouseLeave, isSelected, on
     const handleCopyLink = (e: React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
         setLinkCopied(true)
+        console.log("linkCopied", linkCopied)
     }
     
     const handleConform = async(e: React.MouseEvent<HTMLAnchorElement>) => {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { AppRootState } from "../../../redux/store";
 import Mainbody from "./Mainbody"

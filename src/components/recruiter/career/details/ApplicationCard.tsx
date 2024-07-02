@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { RiUserForbidFill, RiUserReceivedFill, RiUserStarFill, RiUserUnfollowFill } from "react-icons/ri";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { AppRootState } from "../../../../redux/store";
 import { api } from "../../../../services/axios";
 
@@ -35,7 +35,7 @@ function ApplicationCard({ applicationData, connectedStatus }: {
 }) {
     console.log(applicationData, connectedStatus)
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const [showStatus, setShowStatus] = useState(false)
     const { userEmail, userRole } = useSelector((state: AppRootState) => state.user);
 

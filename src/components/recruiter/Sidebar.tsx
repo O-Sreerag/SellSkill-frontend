@@ -1,11 +1,11 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { FaPlus } from "react-icons/fa";
+// import { FaPlus } from "react-icons/fa";
 import { ImProfile } from "react-icons/im";
 import { FiHome } from "react-icons/fi";
 import { SiGooglemeet } from "react-icons/si";
-import { PiStudentFill } from "react-icons/pi";
+// import { PiStudentFill } from "react-icons/pi";
 import { FaUserTie } from "react-icons/fa";
 import { IoLogOut } from "react-icons/io5";
 import { IoNotifications } from "react-icons/io5";
@@ -14,6 +14,7 @@ import { LuMessagesSquare } from "react-icons/lu";
 import { AppRootState } from '../../redux/store';
 import { handleActiveMenu } from "../../redux/slices/activeSlice";
 import { MdDashboard } from "react-icons/md";
+import { useEffect } from "react";
 
 interface SidebarProps {
   activePage: string;
@@ -21,6 +22,11 @@ interface SidebarProps {
 }
 
 function Sidebar({ activePage, setActivePage, }: SidebarProps) {
+  
+  useEffect(() => {
+    console.log("setActivePage", setActivePage)
+  }, [])
+
   const navigate = useNavigate()
   const dispatch = useDispatch()
 

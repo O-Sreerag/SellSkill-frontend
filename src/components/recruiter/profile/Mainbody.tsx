@@ -34,6 +34,8 @@ const Mainbody = () => {
     useEffect(() => {
         console.log("userProfile")
         console.log(userProfile)
+
+        console.log("setImage", setImage)
     }, [userProfile])
 
     useEffect(() => {
