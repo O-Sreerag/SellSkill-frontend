@@ -14,7 +14,7 @@ import Navbar2 from "../../Navbar2"
 import { useLocation } from "react-router-dom";
 import { api } from "../../../../services/axios";
 import ApplicationCard from "./ApplicationCard";
-import ApplicantCard from './applicantCard'
+import ApplicantCard from './ApplicantCards'
 // import Sliders from "./Sliders";
 import { useSelector } from "react-redux";
 import { AppRootState } from "../../../../redux/store";
