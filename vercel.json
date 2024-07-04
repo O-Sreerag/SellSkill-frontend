@@ -1,9 +1,4 @@
 {
-  "build": {
-    "env": {
-      "ESLINT_NO_DEV_ERRORS": "true"
-    }
-  },
   "routes": [
     { "src": "/(.*)", "dest": "/" }
   ]
