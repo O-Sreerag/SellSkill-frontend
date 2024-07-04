@@ -24,8 +24,7 @@ const AuthLogin = () => {
     const [cooldown, setCooldown] = useState(0);
     const [resendEmailTapped, setResendEmailTapped] = useState(false)
     const [resendEmail, setResendEmail] = useState("")
-    const [resendEmailError, setresendEmailError] = useState(null)
-    console.log("setresendEmailError", setresendEmailError)
+    const [resendEmailError, ] = useState(null)
 
     useEffect(() => {
         if (cooldown > 0) {
