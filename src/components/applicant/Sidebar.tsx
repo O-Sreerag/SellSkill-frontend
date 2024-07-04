@@ -49,7 +49,7 @@ function Sidebar({ activePage, setActivePage, }: SidebarProps) {
 
           <li className="px-5 mb-3">
             <div className="flex items-center flex-shrink-0 text-gray-800 gap-1">
-              <img src="/public/logo.png" alt="logo" width={23} />
+              <img src="/logo.png" alt="logo" width={23} />
               <span className="font-semibold text-xl tracking-tight">SellSkill</span>
             </div>
           </li>

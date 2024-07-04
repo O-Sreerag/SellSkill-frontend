@@ -60,7 +60,7 @@ const Navbar: React.FC<NavbarProps> = ({ items }) => {
 
                 <div className="flex items-center justify-between">
                     <div className="flex items-center flex-shrink-0 text-gray-800 mr-6 gap-1">
-                        <img src="/public/logo.png" alt="logo" width={23} />
+                        <img src="/logo.png" alt="logo" width={23} />
                         <span className="font-semibold text-xl tracking-tight">SellSkill</span>
                     </div>
                     <div className="flex">

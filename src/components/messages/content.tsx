@@ -167,7 +167,7 @@ const Content = ({ role }: ContentProps) => {
                                     )) :
                                     <>
                                         <div className="w-full pt-20">
-                                            <img src="/public/404-1.png" alt="404" />
+                                            <img src="/404-1.png" alt="404" />
                                             <div className="flex flex-col justify-center items-center">
                                                 <h3 className="text-lg font-semibold text-blue-gray-600">Whoops!!</h3>
                                                 <p className="text-sm text-blue-gray-600">No connections</p>

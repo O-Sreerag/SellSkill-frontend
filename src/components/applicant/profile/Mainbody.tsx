@@ -274,7 +274,7 @@ const Mainbody = () => {
                                 </div >
                             ) : (
                                 <div className="w-full flex flex-col items-center py-10">
-                                    <img src="/public/404-5.png" alt="404" />
+                                    <img src="/404-5.png" alt="404" />
                                     <div className="flex flex-col justify-center items-center">
                                         <h3 className="text-lg font-semibold text-blue-gray-600">Whoops!!</h3>
                                         <p className="text-sm text-blue-gray-600">Profile not updated</p>

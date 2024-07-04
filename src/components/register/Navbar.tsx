@@ -4,7 +4,7 @@ const Navbar = () => {
         <div className=" text-black pl-4 pr-4 items-center flex justify-between mx-auto">
             <div className="flex p-2 gap-1 items-center">
                 <img
-                    src="/public/logo.png"
+                    src="/logo.png"
                     alt="logo"
                     width={25}
                 />
