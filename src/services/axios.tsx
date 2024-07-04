@@ -1,6 +1,6 @@
 import axios from 'axios'
 //const BASE_URL =  process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "https://server.sellskill.online"
-const BASE_URL = "http://server.sellskill.online";
+const BASE_URL = "https://server.sellskill.online";
 console.log(BASE_URL);
 
 export const api = axios.create({
