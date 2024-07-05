@@ -125,8 +125,8 @@ const Room = () => {
   }
 
   const myMeeting = async (element: any) => {
-    const appID = 462463171
-    const serverSecret = "185d580a5d35139557e75a407bbec3e7"
+    const appID = 994278254
+    const serverSecret = "bf40da3f30afc69b9e487308e2970d31"
     const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(appID, serverSecret, roomID, randomID(5), userName);
 
     const zp = ZegoUIKitPrebuilt.create(kitToken);

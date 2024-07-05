@@ -83,7 +83,7 @@ const Mainbody = () => {
         if (Object.values(userProfile).some(value => !value)) {
             setShowAlert(true);
         } else {
-            const destination = '/recruiter/career/create';
+            const destination = '/recruiter/schedules/create';
             navigate(destination);
         }
     };
