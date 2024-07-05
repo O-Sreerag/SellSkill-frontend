@@ -343,7 +343,6 @@ const Mainbody = () => {
                                                             <p className="text-sm">Work from home available</p>
                                                             <p className="text-sm">Status: <span className="text-black font-semibold">Open</span></p>
                                                         </div>
-
                                                     </div>
                                                 </div>
                                             </div>

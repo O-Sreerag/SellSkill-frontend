@@ -46,6 +46,7 @@ import ApplicantApplications from './components/applicant/applications/dash/Cont
 import Room from './components/videocall/content'
 import Lobby from './components/videocall/lobby'
 // import RoomWrapper from './components/videocall/roomWrapper'
+import ErrorPage from './components/common/error';
 
 function App() {
 
@@ -116,7 +117,7 @@ function App() {
               <Route path="/room/join" element={<Room />} />
               {/* <Route path="/roomWrapper" element={<RoomWrapper />} /> */}
 
-              <Route path="*" element={<div>404 not found</div>} />
+              <Route path="*" element={<ErrorPage />} />
             </Routes>
           </BrowserRouter>
         </PersistGate>

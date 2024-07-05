@@ -28,14 +28,23 @@ interface careerData {
     target_date?: Date;
     contact_name?: string;
     no_of_positions?: number;
-    job_description?: string[];
-    required_skills?: string[];
-    responsibilities?: string[];
-    benefits?: string[];
+    job_description: string[];
+    required_skills: string[];
+    responsibilities: string[];
+    benefits: string[];
     applicants?: string[];
     url?: string;
-
 }
+
+interface RecruiterProfile {
+    companyName: string;
+    industry: string;
+    headquarters: string;
+    ceo: string;
+    founded: string;
+    employees: string;
+    revenue: string;
+  }
 
 const Mainbody = () => {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -44,6 +53,7 @@ const Mainbody = () => {
     const { search } = useLocation();
     const careerId = new URLSearchParams(search).get('id');
     const [career, setCareer] = useState<careerData | null>(null)
+    const [recruiterProfile, setRecruiterProfile] = useState<RecruiterProfile | null>(null);
 
     const { userName = "", userEmail = "", userRole = "" } = useSelector((state: AppRootState) => state.user)
 
@@ -77,10 +87,21 @@ const Mainbody = () => {
                     const data = response.data.result;
                     setCareer(data)
 
+                    if (data.recruiterId) {
+                        console.log("fetching recruiter profile");
+                        const profileResponse = await api.get(`/auth/recruiter/getProfile?recruiterId=/${data.recruiterId}`);
+                        console.log("profileResponse.data")
+                        console.log(profileResponse.data);
+            
+                        if (profileResponse.status === 200) {
+                          setRecruiterProfile(profileResponse.data.result);
+                        }
+                      }
+
                     console.log("adding career to applicant")
-                    const response2 = await api.post(`/career/applicant/add?careerId=${careerId}`)
-                    console.log("response2")
-                    console.log(response2)
+                    const response3 = await api.post(`/career/applicant/add?careerId=${careerId}`)
+                    console.log("response3")
+                    console.log(response3)
                 }
 
             } catch (error) {
@@ -168,98 +189,130 @@ const Mainbody = () => {
                     </div>
                 </div>
             </div>
-            <div className="bg-[#f5f8fa]  flex-1 p-10 w-full">
-                <div className="max-w-[1300px] p-5 lg:p-10 mx-auto">
-                </div>
-            </div>
 
             {
-                career &&
-                <>
-                    <div className="bg-[#edeeef]  flex-1 p-10 w-full">
-                        <div className="max-w-[1300px] p-5 lg:p-10 mx-auto">
-                            <p className="text-gray-600 text-base md:text-base mt-32 italic text-left">apply for the job from your url</p>
-                            <div className={`mt-6 bg-white rounded-md transition-all duration-1000 shadow-md`}>
-                                <div className="bg-blue-500 border-white border-[4px] rounded-lg p-6">
-                                    <div>
-                                        <h3 className="text-lg font-semibold text-white">MERN Stack developer (jnr)</h3>
-                                        <h3 className="text-lg font-semibold text-[#dcfc44] cursor-pointer hover:underline">Konisagg Developing and consulting Tech</h3>
-                                        <div className="flex">
-                                            <div className="mt-4 text-white grid grid-cols-3 gap-2 w-[95%]">
-                                                <p className="text-sm">Experience: 1 - 3 yrs</p>
-                                                <p className="text-sm">Package: 7 - 8 LPA</p>
-                                                <p className="text-sm">Vacancies: 4 prs</p>
-                                                <p className="text-sm">Job type: Full time</p>
-                                                <p className="text-sm">Work from home available</p>
-                                                <p className="text-sm">Status: <span className="font-semibold">Open</span></p>
-                                            </div>
-                                            <div className="w-[5%] flex items-end justify-end">
-                                                {isButtonTapped ? (
-                                                    <RxCross2
-                                                        className={`w-8 h-8 cursor-pointer text-white`}
-                                                        onClick={handleButtonTap}
-                                                    />
-                                                ) : (
-                                                    <IoIosArrowDropdown
-                                                        className={`w-8 h-8 cursor-pointer text-white`}
-                                                        onClick={handleButtonTap}
-                                                    />
-                                                )}
+                career ?
+                    <>
+                        <div className="bg-[#f5f8fa]  flex-1 px-10 w-full">
+                            <div className="bg-[#f5f8fa] max-w-[1300px] p-5 mx-auto">
+                                <p className="text-gray-600 text-base md:text-base mt-32 italic text-left">apply for the job from your url</p>
+                                <div className={`mt-6 bg-white rounded-md transition-all duration-1000 shadow-md`}>
+                                    <div className="bg-blue-500 border-white border-[4px] rounded-lg p-6">
+                                        <div>
+                                            <h3 className="text-lg font-semibold text-white">{career.posting_title}</h3>
+                                            <h3 className="text-lg font-semibold text-[#dcfc44] cursor-pointer hover:underline">Konisagg Developing and consulting Tech</h3>
+                                            <div className="flex">
+                                                <div className="mt-4 text-white grid grid-cols-3 gap-2 w-[95%]">
+                                                    <p className="text-sm">Experience: {career.workExp_min} - {career.workExp_min} yrs</p>
+                                                    <p className="text-sm">Package: {career.salary_min} - {career.salary_max} LPA</p>
+                                                    <p className="text-sm">Vacancies: {career.no_of_positions} prs</p>
+                                                    <p className="text-sm">Job type: {career.job_type}</p>
+                                                    <p className="text-sm">Work from home available</p>
+                                                    <p className="text-sm">Status: <span className="font-semibold">Open</span></p>
+                                                </div>
+                                                <div className="w-[5%] flex items-end justify-end">
+                                                    {isButtonTapped ? (
+                                                        <RxCross2
+                                                            className={`w-8 h-8 cursor-pointer text-white`}
+                                                            onClick={handleButtonTap}
+                                                        />
+                                                    ) : (
+                                                        <IoIosArrowDropdown
+                                                            className={`w-8 h-8 cursor-pointer text-white`}
+                                                            onClick={handleButtonTap}
+                                                        />
+                                                    )}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                {
-                                    isButtonTapped ? (
-                                        <div className={`p-6`}>
-                                            <div>
-                                                <div className="mt-4 grid grid-cols-2 gap-2 w-[95%]">
-                                                    <div>
-                                                        <h3 className="text-lg font-semibold mb-3">Job Description</h3>
-                                                        <ul className="p-5 list-disc text-gray-800 text-sm">
-                                                            <li className="mb-2">We are looking for a passionate MERN Stack Developer to join our team.</li>
-                                                            <li className="mb-2">In this role, you will be responsible for developing and maintaining web applications using the MERN stack (MongoDB, Express.js, React, Node.js).</li>
-                                                            <li className="mb-2">You should have a strong understanding of JavaScript, React.js, and Node.js, and experience with MongoDB or other NoSQL databases.</li>
-                                                            <li className="mb-2">Experience with GraphQL, Redux, or TypeScript is a plus.</li>
-                                                            <li className="mb-2">The ideal candidate should be detail-oriented, have excellent problem-solving skills, and be able to work independently as well as part of a team.</li>
-                                                            <li className="mb-2">Strong communication skills and the ability to collaborate effectively with other developers and stakeholders are essential.</li>
-                                                            <li className="mb-2">This is a full-time position based in New York City. Remote work options are available.</li>
-                                                            <li className="mb-2">If you are passionate about web development and want to work on exciting projects in a dynamic and collaborative environment, we would love to hear from you!</li>
-                                                        </ul>
-                                                    </div>
-                                                    <div>
-                                                        <h3 className="text-lg font-semibold mb-3">Skills Required</h3>
-                                                        <ul className="text-gray-800 text-sm">
-                                                            <li className="mb-2">Strong understanding of JavaScript, React.js, and Node.js</li>
-                                                            <li className="mb-2">Experience with MongoDB or other NoSQL databases</li>
-                                                            <li className="mb-2">Knowledge of GraphQL, Redux, or TypeScript is a plus</li>
-                                                            <li className="mb-2">Excellent problem-solving skills</li>
-                                                            <li className="mb-2">Strong communication and collaboration skills</li>
-                                                        </ul>
-                                                        <div className="mt-8">
-                                                            <h3 className="text-lg font-semibold mb-3">Company Information</h3>
-                                                            <p className="text-gray-800 text-sm mb-2">Company:<span className="font-semibold"> Konisagg Developing and Consulting Tech</span></p>
-                                                            <p className="text-gray-800 text-sm mb-2">Location:<span className="font-semibold"> New York, NY</span></p>
-                                                            <p className="text-gray-800 text-sm mb-2">Industry:<span className="font-semibold"> Technology</span></p>
+                                    {
+                                        isButtonTapped ? (
+                                            <div className={`p-6`}>
+                                                <div>
+                                                    <div className="mt-4 grid grid-cols-2 gap-2 w-[95%]">
+                                                        <div>
+                                                            <h3 className="text-lg font-semibold mb-3">Job Description</h3>
+                                                            <ul className="p-5 list-disc text-gray-800 text-sm">
+                                                                {
+                                                                    career.job_description.map(eachItem => (
+                                                                        <li className="mb-2">{eachItem}</li>
+                                                                    ))
+                                                                }
+                                                            </ul>
+                                                        </div>
+                                                        <div>
+                                                            <h3 className="text-lg font-semibold mb-3">Benefits</h3>
+                                                            <ul className="p-5 list-disc text-gray-800 text-sm">
+                                                                {
+                                                                    career.benefits.map(eachItem => (
+                                                                        <li className="mb-2">{eachItem}</li>
+                                                                    ))
+                                                                }
+                                                            </ul>
+                                                        </div>
+                                                        <div>
+                                                            <h3 className="text-lg font-semibold mb-3">Responsibilities</h3>
+                                                            <ul className="p-5 list-disc text-gray-800 text-sm">
+                                                                {
+                                                                    career.responsibilities.map(eachItem => (
+                                                                        <li className="mb-2">{eachItem}</li>
+                                                                    ))
+                                                                }
+                                                            </ul>
+                                                        </div>
+                                                        <div>
+                                                            <h3 className="text-lg font-semibold mb-3">Skills Required</h3>
+                                                            <ul className="p-5 list-disc text-gray-800 text-sm">
+                                                                {
+                                                                    career.required_skills.map(eachItem => (
+                                                                        <li className="mb-2">{eachItem}</li>
+                                                                    ))
+                                                                }
+                                                            </ul>
+                                                        </div>
+                                                        <div>
+                                                            <h3 className="text-lg font-semibold mb-3">Skills Required</h3>
+                                                            <ul className="p-5 list-disc text-gray-800 text-sm">
+                                                                {
+                                                                    career.benefits.map(eachItem => (
+                                                                        <li className="mb-2">{eachItem}</li>
+                                                                    ))
+                                                                }
+                                                            </ul>
+                                                            <div className="mt-8">
+                                                                <h3 className="text-lg font-semibold mb-3">Company Information</h3>
+                                                                <p className="text-gray-800 text-sm mb-2">Company:<span className="font-semibold">{recruiterProfile?.companyName}</span></p>
+                                                                <p className="text-gray-800 text-sm mb-2">Industry:<span className="font-semibold">{recruiterProfile?.industry}</span></p>
+                                                                <p className="text-gray-800 text-sm mb-2">Headquarters:<span className="font-semibold">{recruiterProfile?.headquarters}</span></p>
+                                                                <p className="text-gray-800 text-sm mb-2">Ceo:<span className="font-semibold">{recruiterProfile?.ceo}</span></p>
+                                                                <p className="text-gray-800 text-sm mb-2">Founded:<span className="font-semibold">{recruiterProfile?.founded}</span></p>
+                                                                <p className="text-gray-800 text-sm mb-2">Employees:<span className="font-semibold">{recruiterProfile?.employees}</span></p>
+                                                                <p className="text-gray-800 text-sm mb-2">Revenue:<span className="font-semibold">{recruiterProfile?.revenue}</span></p>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div className="cursor-pointer text-gray-800 text-center font-semibold italic hover:underline" onClick={handleGoToCareer}>
-                                                    apply now
+                                                    <div className="cursor-pointer text-gray-800 text-center font-semibold italic hover:underline" onClick={handleGoToCareer}>
+                                                        apply now
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    ) : (
-                                        <div></div>
-                                    )
-                                }
+                                        ) : (
+                                            <div></div>
+                                        )
+                                    }
+                                </div>
+                                <p className="text-gray-600 text-base md:text-base mt-10 italic text-center">explore more jobs from
+                                    <span className="text-lg font-semibold text-pink-500 cursor-pointer underline" onClick={handleGoToCareer}> Konisagg Developing and consulting Tech</span>
+                                </p>
                             </div>
-                            <p className="text-gray-600 text-base md:text-base mt-10 italic text-center">explore more jobs from
-                                <span className="text-lg font-semibold text-pink-500 cursor-pointer underline" onClick={handleGoToCareer}> Konisagg Developing and consulting Tech</span>
-                            </p>
+                        </div>
+                    </> :
+
+                    <div className="bg-[#f5f8fa]  flex-1 p-10 w-full">
+                        <div className="max-w-[1300px] p-5 lg:p-10 mx-auto">
                         </div>
                     </div>
-                </>
             }
 
             <div className="bg-white  flex-1 p-10 w-full">
