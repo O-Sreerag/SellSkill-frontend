@@ -10,7 +10,7 @@ interface SidebarProps {
 
 function Sidebar({ activePage, setActivePage }: SidebarProps) {
   const navigate = useNavigate()
-  console.log("serActivePage", setActivePage)
+  console.log("setActivePage", setActivePage)
 
   const handleLogout = () => {
     navigate('/admin/login');

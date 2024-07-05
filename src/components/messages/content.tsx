@@ -60,6 +60,7 @@ const Content = ({ role }: ContentProps) => {
         const fetchData = async () => {
             try {
                 // Fetch all connected applicants for the current recruiter
+                console.log("Fetch all connected applicants for the current recruiter")
                 const response = await api.get(`/chat/room/getall`)
                 console.log(response.data)
                 const data = response.data.result;

@@ -1,7 +1,7 @@
 // App.tsx
 import './App.css'
 
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import store, { persistore } from './redux/store';
@@ -59,6 +59,7 @@ function App() {
             <Routes>
 
               {/* Recruiter/Applicant Home */}
+              <Route path="/" element={<Navigate to="/home" />} />
               <Route path='/home' element={<Home />} />
 
               {/* Admin */}
