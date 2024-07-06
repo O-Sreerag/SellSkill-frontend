@@ -87,7 +87,7 @@ const AuthLogin = () => {
 
                 localStorage.setItem('isBlocked', user.status);
                 // Redirect or perform other actions based on user status
-                if (user.status) {
+                if (user.status == true) {
                     alert("Your account has been blocked. Please contact support.");
                     window.location.href = '/blocked';
                 }

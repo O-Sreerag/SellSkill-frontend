@@ -125,8 +125,6 @@ const Mainbody = () => {
                 }
                 toast.success("Profile updated successfully");
                 setEditClicked(prevValue => !prevValue);
-            } else {
-                throw new Error('API request failed');
             }
         } catch (validationErrors: any) {
             if (validationErrors instanceof Yup.ValidationError) {
