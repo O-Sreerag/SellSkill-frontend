@@ -68,7 +68,7 @@ const Mainbody = () => {
         );
     };
 
-    const { userName = 'Name', userEmail = 'email', userProfile = { companyName: "", industry: "", headquarters: "", ceo: "", founded: "", employees: "", revenue: "" } } = useSelector((state: AppRootState) => state.user);
+    const { userName = 'Name', userEmail = 'email',  userProfile = { companyName: "", industry: "", headquarters: "", ceo: "", founded: "", employees: "", revenue: "" } } = useSelector((state: AppRootState) => state.user);
 
     const handleCreate = () => {
         if (Object.values(userProfile).some(value => !value)) {

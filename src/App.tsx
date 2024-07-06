@@ -72,24 +72,21 @@ function App() {
               <Route path='/verify-email' element={<PublicRoute><EmailVerified /></PublicRoute>} />
 
               {/* Recruiter */}
-              <Route path='/recruiter/dash' element={<RecruiterProtectedRoute><RecruiterDash /></RecruiterProtectedRoute>} />
-
+              {/* <Route path='/recruiter/dash' element={<RecruiterProtectedRoute><RecruiterDash /></RecruiterProtectedRoute>} />
               <Route path='/recruiter/career' element={<RecruiterProtectedRoute><RecruiterCareerDash /></RecruiterProtectedRoute>} />
               <Route path='/recruiter/career/create' element={<RecruiterProtectedRoute><RecruiterCareerCreate /></RecruiterProtectedRoute>} />
               <Route path='/recruiter/career/details' element={<RecruiterProtectedRoute><RecruiterCareerDetails /></RecruiterProtectedRoute>} />
               <Route path='/recruiter/career/applicants' element={<RecruiterProtectedRoute><RecruiterCareerDetails /></RecruiterProtectedRoute>} />
-
               <Route path='/recruiter/schedules' element={<RecruiterProtectedRoute><RecruiterInterviewDash /></RecruiterProtectedRoute>} />
               <Route path='/recruiter/schedules/create' element={<RecruiterProtectedRoute><RecruiterInterviewCreate /></RecruiterProtectedRoute>} />
               <Route path='/recruiter/schedules/details' element={<RecruiterProtectedRoute><RecruiterInterviewDetails /></RecruiterProtectedRoute>} />
-
-              <Route path='/recruiter/profile' element={<RecruiterProtectedRoute><RecruiterProfile /></RecruiterProtectedRoute>} />
+              <Route path='/recruiter/profile' element={<RecruiterProtectedRoute><RecruiterProfile /></RecruiterProtectedRoute>} /> */}
               
-              {/* <Route path='/recruiter/dash' element={<RecruiterDash />} />
+              <Route path='/recruiter/dash' element={<RecruiterDash />} />
                   <Route path='/recruiter/career' element={<RecruiterCareerDash />} />
                   <Route path='/recruiter/career/create' element={<RecruiterCareerCreate />} />
                   <Route path='/recruiter/career/details' element={<RecruiterCareerDetails />} />
-                  <Route path='/recruiter/career/applicants' element={<RecruiterCareerDetails />} /> */}
+                  <Route path='/recruiter/career/applicants' element={<RecruiterCareerDetails />} />
               {/* <Route path='/recruiter/schedules' element={<RecruiterInterviewDash />} />
                   <Route path='/recruiter/schedules/create' element={<RecruiterInterviewCreate />} />
                   <Route path='/recruiter/schedules/details' element={<RecruiterInterviewDetails />} /> */}
@@ -97,22 +94,22 @@ function App() {
 
 
               {/* Applicant */}
-              <Route path='/applicant/profile' element={<ApplicantProtectedRoute><ApplicantProfile /></ApplicantProtectedRoute>} />
+              {/* <Route path='/applicant/profile' element={<ApplicantProtectedRoute><ApplicantProfile /></ApplicantProtectedRoute>} />
               <Route path='/applicant/dash' element={<ApplicantDash />} />
               <Route path='/applicant/career' element={<ApplicantProtectedRoute><ApplicantCareerDash /></ApplicantProtectedRoute>} />
               <Route path='/applicant/career/details' element={<ApplicantProtectedRoute><ApplicantCareerDetails /></ApplicantProtectedRoute>} />
               <Route path='/applicant/career/apply' element={<ApplicantProtectedRoute><ApplicantCareerApply /></ApplicantProtectedRoute>} />
               <Route path='/applicant/schedules' element={<ApplicantProtectedRoute><ApplicantSchedules /></ApplicantProtectedRoute>} />
               <Route path='/applicant/schedules/details' element={<ApplicantProtectedRoute><ApplicantSchedulesDetails /></ApplicantProtectedRoute>} />
-              <Route path='/applicant/applications' element={<ApplicantProtectedRoute><ApplicantApplications /></ApplicantProtectedRoute>} />
+              <Route path='/applicant/applications' element={<ApplicantProtectedRoute><ApplicantApplications /></ApplicantProtectedRoute>} /> */}
 
-              {/* <Route path='/applicant/profile' element={<ApplicantProfile />} />
+              <Route path='/applicant/profile' element={<ApplicantProfile />} />
               <Route path='/applicant/dash' element={<ApplicantDash />} />
               <Route path='/applicant/career' element={<ApplicantCareerDash />} />
               <Route path='/applicant/career/apply' element={<ApplicantCareerApply />} />
               <Route path='/applicant/schedules' element={<ApplicantSchedules />} />
               <Route path='/applicant/schedules/details' element={<ApplicantSchedulesDetails />} />
-              <Route path='/applicant/applications' element={<ApplicantApplications />} /> */}
+              <Route path='/applicant/applications' element={<ApplicantApplications />} />
 
               <Route path="/lobby/join" element={<Lobby />} />
               <Route path="/room/join" element={<Room />} />
