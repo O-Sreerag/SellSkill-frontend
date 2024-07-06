@@ -349,7 +349,7 @@ const Mainbody = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="w-full flex flex-wrap justify-between items-start gap-3 max-w-[1000px] mx-auto">
+                        {/* <div className="w-full flex flex-wrap justify-between items-start gap-3 max-w-[1000px] mx-auto">
                             <div className="flex flex-col gap-3 p-4 border rounded shadow-lg w-full max-w-xs">
                                 <div className="flex justify-start w-full gap-1 text-sm font-semibold text-blue-gray-800 items-center">
                                     <FaUserTie />
@@ -511,7 +511,182 @@ const Mainbody = () => {
                                         </>
                                 }
                             </div>
+                        </div> */}
+                        <div className="w-full max-w-[1000px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <div className="flex flex-col gap-3 p-4 border rounded shadow-lg bg-white">
+                                <div className="flex justify-start w-full gap-1 text-sm font-semibold text-blue-gray-800 items-center">
+                                    <FaUserTie />
+                                    <p>Profile</p>
+                                </div>
+                                {userProfile && profile.companyName !== "" ? (
+                                    <div className="p-4 bg-white rounded-lg">
+                                        <p className="text-xl font-bold text-gray-800">Name: {userName}</p>
+                                        <p className="text-sm text-gray-600">Email: {userEmail}</p>
+                                        <h3 className="mt-3 font-semibold text-gray-700 border-b pb-2 mb-2">Company Info</h3>
+                                        <div className="grid grid-cols-2 gap-4 text-sm text-gray-600">
+                                            <div>
+                                                <p className="font-semibold text-gray-800">Company Name:</p>
+                                                <p>{profile?.companyName}</p>
+                                            </div>
+                                            <div>
+                                                <p className="font-semibold text-gray-800">Industry:</p>
+                                                <p>{profile?.industry}</p>
+                                            </div>
+                                            <div>
+                                                <p className="font-semibold text-gray-800">Headquarters:</p>
+                                                <p>{profile?.headquarters}</p>
+                                            </div>
+                                            <div>
+                                                <p className="font-semibold text-gray-800">CEO:</p>
+                                                <p>{profile?.ceo}</p>
+                                            </div>
+                                            <div>
+                                                <p className="font-semibold text-gray-800">Founded:</p>
+                                                <p>{profile?.founded}</p>
+                                            </div>
+                                            <div>
+                                                <p className="font-semibold text-gray-800">Number of Employees:</p>
+                                                <p>{profile?.employees}</p>
+                                            </div>
+                                            <div>
+                                                <p className="font-semibold text-gray-800">Revenue:</p>
+                                                <p>{profile?.revenue}</p>
+                                            </div>
+                                        </div>
+                                        <button className="text-blue-500 hover:underline mt-4">View More</button>
+                                    </div>
+                                ) : (
+                                    <div className="w-full flex flex-col items-center py-10">
+                                        <img src="/404-5.png" alt="404" />
+                                        <div className="flex flex-col justify-center items-center">
+                                            <h3 className="text-lg font-semibold text-blue-gray-600">Whoops!!</h3>
+                                            <p className="text-sm text-blue-gray-600">Profile not updated</p>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="flex flex-col gap-3 p-4 border rounded shadow-lg bg-white">
+                                <div className="flex justify-start w-full gap-1 text-sm font-semibold text-blue-gray-800 items-center">
+                                    <LuMessagesSquare />
+                                    <p>Chats</p>
+                                </div>
+                                <div className="flex flex-col">
+                                    {people && people.length !== 0 ? (
+                                        people.map((eachPerson: People) => (
+                                            <div
+                                                key={eachPerson.id}
+                                                className="flex justify-between items-center px-4 py-3 border-b hover:bg-[#f0f5f5] cursor-pointer"
+                                            >
+                                                <div className="flex justify-between items-center gap-2">
+                                                    <div className="bg-[#c6f2f2] w-10 h-10 flex items-center justify-center rounded-full">
+                                                        <p className="text-sm text-white">
+                                                            {userRole === "applicant"
+                                                                ? eachPerson.item.user2_name.charAt(0).toUpperCase()
+                                                                : eachPerson.item.user1_name.charAt(0).toUpperCase()}
+                                                        </p>
+                                                    </div>
+                                                    <div>
+                                                        <h2 className="text-sm font-semibold text-black">
+                                                            {userRole === "applicant"
+                                                                ? eachPerson.item.user2_name
+                                                                : eachPerson.item.user1_name}
+                                                        </h2>
+                                                        <p className="text-sm text-blue-gray-600">
+                                                            {
+                                                                eachPerson.item.chat[
+                                                                    eachPerson.item.chat.length - 1
+                                                                ]?.message
+                                                            }
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div className="flex flex-col justify-center items-center gap-2">
+                                                    <div>
+                                                        {eachPerson.item.chat[eachPerson.item.chat.length - 1]
+                                                            ?.time && (
+                                                                <p className="text-[#2fdee4] font-semibold text-xs">
+                                                                    {
+                                                                        formatDateAndTime(
+                                                                            eachPerson.item.chat[
+                                                                                eachPerson.item.chat.length - 1
+                                                                            ]?.time
+                                                                        ).timeString
+                                                                    }
+                                                                </p>
+                                                            )}
+                                                    </div>
+                                                    <div className="bg-[#c6f2f2] rounded-full w-5 h-5 flex items-center justify-center">
+                                                        <p className="text-xs">1</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <div className="w-full pt-20">
+                                            <img src="/404-1.png" alt="404" />
+                                            <div className="flex flex-col justify-center items-center">
+                                                <h3 className="text-lg font-semibold text-blue-gray-600">
+                                                    Whoops!!
+                                                </h3>
+                                                <p className="text-sm text-blue-gray-600">No connections</p>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className="flex flex-col gap-3 p-4 border rounded shadow-lg bg-white">
+                                <div className="flex justify-start w-full gap-1 text-sm font-semibold text-blue-gray-800 items-center">
+                                    <IoNotifications />
+                                    <p>Notifications</p>
+                                </div>
+                                {notifications && notifications.length !== 0 ? (
+                                    [...notifications].reverse().map((eachNotification: Notification) => (
+                                        <div
+                                            key={eachNotification.id}
+                                            className="flex justify-between items-center px-4 py-3 border-b hover:bg-[#f0f5f5] cursor-pointer"
+                                        >
+                                            <div className="flex justify-between items-center gap-2">
+                                                <div className="bg-[#c6f2f2] w-10 h-10 flex items-center justify-center rounded-full relative">
+                                                    <p className="text-md text-white">
+                                                        {eachNotification.item.type.charAt(0).toUpperCase()}
+                                                    </p>
+                                                    {!eachNotification.item.read && (
+                                                        <GiPlainCircle className="text-[#2fdee4] text-sm absolute -top-[0.05rem] -left-[0.05rem]" />
+                                                    )}
+                                                </div>
+                                                <div className="w-[70%]">
+                                                    <h2 className="text-sm font-semibold text-black">
+                                                        {eachNotification.item.type}
+                                                    </h2>
+                                                    <p className="text-sm text-blue-gray-600">
+                                                        {eachNotification.item.message}
+                                                    </p>
+                                                </div>
+                                                <div>
+                                                    <p className="text-[#2fdee4] font-semibold text-xs">
+                                                        {formatDateAndTime(eachNotification.item.createdAt).timeString}
+                                                    </p>
+                                                    <p className="text-[#2fdee4] font-semibold text-xs">
+                                                        {formatDateAndTime(eachNotification.item.createdAt).dateString}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div className="w-full pt-20">
+                                        <img src="/404-1.png" alt="404" />
+                                        <div className="flex flex-col justify-center items-center">
+                                            <h3 className="text-lg font-semibold text-blue-gray-600">Whoops!!</h3>
+                                            <p className="text-sm text-blue-gray-600">No notifications</p>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
                         </div>
+
                     </div>
 
                 </div>
