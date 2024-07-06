@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { AppRootState } from "../../../../redux/store";
 import Chat from '../../../messages/content'
 import Notification from '../../../notifications/content'
+import { api } from "../../../../services/axios";
 
 const Content = () => {
   const [activePage, setActivePage] = useState('career');
@@ -25,6 +26,25 @@ const Content = () => {
       });
     }
   }, [activeMenu]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.get(`/auth/recruiter/checkBlock`)
+        console.log(response.data)
+        const data = response.data.result;
+        if(data) {
+          console.log("blocked")
+        } else{
+          console.log("unblocked")
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  })
 
   return (
     <div>

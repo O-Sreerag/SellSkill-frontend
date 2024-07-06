@@ -434,8 +434,11 @@ const Mainbody = () => {
 
                             <div className="flex flex-col gap-3 p-4 border rounded shadow-lg bg-white">
                                 <div className="flex justify-start w-full gap-1 text-sm font-semibold text-blue-gray-800 items-center">
-                                    <LuMessagesSquare />
-                                    <p>Chats</p>
+                                    <div>
+                                        <LuMessagesSquare />
+                                        <p>Chats</p>
+                                    </div>
+                                    <button className="text-blue-500 hover:underline mt-4">View More</button>
                                 </div>
                                 <div className="flex flex-col">
                                     {people && people.length !== 0 ? (
@@ -504,8 +507,11 @@ const Mainbody = () => {
 
                             <div className="flex flex-col gap-3 p-4 border rounded shadow-lg bg-white">
                                 <div className="flex justify-start w-full gap-1 text-sm font-semibold text-blue-gray-800 items-center">
-                                    <IoNotifications />
-                                    <p>Notifications</p>
+                                    <div>
+                                        <IoNotifications />
+                                        <p>Notifications</p>
+                                    </div>
+                                    <button className="text-blue-500 hover:underline mt-4">View More</button>
                                 </div>
                                 {notifications && notifications.length !== 0 ? (
                                     [...notifications].reverse().map((eachNotification: Notification) => (
