@@ -66,7 +66,7 @@ function ApplicantCard({ applicantData, connectedStatus }: {
             </div>
             <div className="flex w-1/2 items-center justify-between">
                 {
-                    status ? (
+                    status == true ? (
                         <p>User is, <span className="text-red-400 font-semibold"> blocked </span></p>
                     ) : (
                         <p>User is, <span className="text-green-400 font-semibold"> active </span></p>
@@ -76,7 +76,7 @@ function ApplicantCard({ applicantData, connectedStatus }: {
                     className="rounded-md border px-2 py-[0.15rem] shadow-sm focus:outline-none"
                     onClick={handleBlock}>
                     {
-                        status ? (
+                        status == true ? (
                             <p className="text-green-500"> unblock </p>
                         ) : (
                             <p className="text-red-500"> block </p>

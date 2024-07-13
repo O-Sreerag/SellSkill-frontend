@@ -87,7 +87,7 @@ const Mainbody = () => {
         };
 
         fetchData();
-    }, []);
+    }, [dropDownValue]);
 
     const handleDropDownChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setDropDownValue(event.target.value as DropDownValues);
