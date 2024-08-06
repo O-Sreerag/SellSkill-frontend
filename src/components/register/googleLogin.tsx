@@ -33,7 +33,7 @@ function GoogleLoginButton() {
                     });
                     console.log(userinfoRes)
                     
-                    const googleLoginRes = await axios.get(`://server.sellskill.online/auth/googleLogin?access_token=${user.access_token}`);
+                    const googleLoginRes = await axios.get(`://sellskill.zapto.org/auth/googleLogin?access_token=${user.access_token}`);
                     console.log(googleLoginRes.data);
                     
                     if (googleLoginRes.data.role === "recruiter") {

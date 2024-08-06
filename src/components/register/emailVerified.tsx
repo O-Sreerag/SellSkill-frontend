@@ -29,7 +29,7 @@ export default function Component() {
         setIsLoading(true);
         setInitialIcon(false)
         try {
-            const response = await fetch(`https://server.sellskill.online/auth/common/verify-user?code=${encodeURIComponent(code)}`);
+            const response = await fetch(`http://sellskill.zapto.org/auth/common/verify-user?code=${encodeURIComponent(code)}`);
             const data = await response.json();
             console.log(data)
             if (response.status === 200) {

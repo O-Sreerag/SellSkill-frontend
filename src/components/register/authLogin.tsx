@@ -65,7 +65,7 @@ const AuthLogin = () => {
             await validationSchema.validate({ email, password }, { abortEarly: false });
 
             // If validation succeeds, submit the form
-            const response = await axios.post(`https://server.sellskill.online/auth/common/login`, { email, password })
+            const response = await axios.post(`http://sellskill.zapto.org/auth/common/login`, { email, password })
             console.log(response);
 
             // // Check if the signup was successful
@@ -138,7 +138,7 @@ const AuthLogin = () => {
             return;
         }
         try {
-            const response = await axios.post('https://server.sellskill.online/auth/common/sendMail', {
+            const response = await axios.post('http://sellskill.zapto.org/auth/common/sendMail', {
                 name,
                 email: resendEmail,
                 role
