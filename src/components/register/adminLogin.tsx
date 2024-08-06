@@ -46,7 +46,7 @@ const AuthLogin = () => {
             await validationSchema.validate({ email, password }, { abortEarly: false });
 
             console.log("trying to login admin")
-            const response = await axios.post(`http://sellskill.zapto.org/auth/admin/login`, { email, password })
+            const response = await axios.post(`https://sellskill.hawkinvoice.online/auth/admin/login`, { email, password })
             console.log(response);
 
             if (response.status === 200) {

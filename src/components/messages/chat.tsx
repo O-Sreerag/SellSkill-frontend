@@ -53,7 +53,7 @@ const Chat: React.FC<ChatProps> = ({ selectedPerson, role }) => {
 
             setMessages(selectedPerson.item.chat)
 
-            const newSocket = io('http://sellskill.zapto.org');
+            const newSocket = io('https://sellskill.hawkinvoice.online');
             setSocket(newSocket);
 
             newSocket.emit('join', selectedPerson.item._id);

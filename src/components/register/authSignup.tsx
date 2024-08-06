@@ -71,7 +71,7 @@ const AuthSignup = () => {
 
             const isGoogle = false
             // If validation succeeds, submit the form
-            const response = await axios.post(`http://sellskill.zapto.org/auth/${role}/signup`, { name, email, password, isGoogle})
+            const response = await axios.post(`https://sellskill.hawkinvoice.online/auth/${role}/signup`, { name, email, password, isGoogle})
 
             // Check if the signup was successful
             if (response.status === 200) {
@@ -80,7 +80,7 @@ const AuthSignup = () => {
                 console.log(user)
                 console.log("user has successfully signup")
 
-                const otherResponse = await axios.post('http://sellskill.zapto.org/auth/common/sendMail', {
+                const otherResponse = await axios.post('https://sellskill.hawkinvoice.online/auth/common/sendMail', {
                     name,
                     email,
                     role
